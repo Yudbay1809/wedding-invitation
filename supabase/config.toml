@@ -1,0 +1,27 @@
+project_id = "wedsaas-local"
+
+[api]
+port = 55431
+schemas = ["public", "auth", "storage"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 55432
+major_version = 15
+
+[studio]
+port = 55433
+
+[inbucket]
+port = 55434
+
+[auth]
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://localhost:3000/*"]
+
+[storage]
+file_size_limit = "50MiB"
+
+[analytics]
+enabled = false

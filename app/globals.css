@@ -1,0 +1,299 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-sand text-ink font-body antialiased;
+}
+
+h1, h2, h3, h4 {
+  @apply font-display;
+}
+
+.gradient-hero {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(255, 107, 107, 0.18), transparent 50%),
+    radial-gradient(circle at 85% 20%, rgba(14, 165, 233, 0.16), transparent 45%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.9), rgba(246, 243, 239, 0.9));
+}
+
+.card {
+  @apply rounded-3xl bg-white shadow-soft border border-black/5;
+}
+
+.section-title {
+  @apply text-3xl md:text-4xl font-semibold text-ink;
+}
+
+.muted {
+  @apply text-graphite;
+}
+
+.surface {
+  @apply rounded-3xl bg-white shadow-lift border border-black/5;
+}
+
+.pill {
+  @apply inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em];
+}
+
+.chip {
+  @apply inline-flex items-center rounded-full bg-sand px-3 py-1 text-xs font-semibold text-graphite;
+}
+
+.hover-lift {
+  @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lift;
+}
+
+.pill-accent {
+  @apply text-white;
+  background: var(--accent, #0ea5e9);
+  border-color: transparent;
+}
+
+.marketing-bg {
+  background-image: url("/assets/hero-bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+}
+
+.marketing-shell {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255, 214, 170, 0.25), transparent 45%),
+    radial-gradient(circle at 90% 5%, rgba(236, 217, 197, 0.45), transparent 40%),
+    #f8f3ed;
+}
+
+.theme-classic {
+  --accent: #0ea5e9;
+}
+
+.theme-minimal {
+  --accent: #0f172a;
+}
+
+.theme-romantic {
+  --accent: #ff6b6b;
+}
+
+.theme-luxury {
+  --accent: #f59e0b;
+}
+
+.theme-boho {
+  --accent: #c97a5b;
+}
+
+.theme-garden {
+  --accent: #6b9f87;
+}
+
+.theme-modern {
+  --accent: #111827;
+}
+
+.theme-celestial {
+  --accent: #6366f1;
+}
+
+.theme-minimal h1,
+.theme-minimal h2 {
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.theme-romantic h1,
+.theme-romantic h2 {
+  letter-spacing: 0.02em;
+}
+
+.theme-luxury .surface {
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+.theme-romantic {
+  font-family: var(--font-display);
+}
+
+.theme-minimal .pill {
+  letter-spacing: 0.35em;
+}
+
+.floating-card {
+  @apply bg-white/90 backdrop-blur border border-black/10 rounded-3xl shadow-lift;
+}
+
+.romantic-ornament {
+  background-image: url("/assets/floral-ornament.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.theme-minimal {
+  --accent: #0f172a;
+}
+
+.theme-minimal .mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.theme-romantic {
+  --accent: #ff6b6b;
+}
+
+.theme-romantic h1,
+.theme-romantic h2,
+.theme-romantic h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.theme-boho h1,
+.theme-boho h2 {
+  letter-spacing: 0.02em;
+}
+
+.theme-garden h1,
+.theme-garden h2 {
+  letter-spacing: 0.01em;
+}
+
+.theme-modern h1,
+.theme-modern h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.theme-celestial h1,
+.theme-celestial h2 {
+  letter-spacing: 0.04em;
+}
+
+.theme-luxury {
+  --accent: #f59e0b;
+}
+
+.theme-luxury .lux-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.7), rgba(245, 158, 11, 0.1));
+}
+
+.envelope-shell {
+  position: relative;
+  width: 320px;
+  height: 210px;
+  perspective: 800px;
+}
+
+.envelope-base {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+}
+
+.envelope-flap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 60%;
+  border-radius: 28px 28px 16px 16px;
+  background: linear-gradient(135deg, #f7d7cf, #f4e6de);
+  transform-origin: top;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.envelope-letter {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 18px;
+  height: 70%;
+  border-radius: 20px;
+  background: #fffdf9;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  z-index: 2;
+}
+
+.typewriter {
+  min-height: 20px;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 1em;
+  margin-left: 4px;
+  background: rgba(17, 24, 39, 0.6);
+  animation: blink 1s steps(2, start) infinite;
+  vertical-align: -2px;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.sparkle-burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sparkle-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent, #ff6b6b);
+  opacity: 0;
+  animation: sparkle-burst 700ms ease-out forwards;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes sparkle-burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--distance)) scale(1.2);
+  }
+}
+
+@keyframes wave {
+  0% { height: 6px; opacity: 0.5; }
+  50% { height: 22px; opacity: 1; }
+  100% { height: 6px; opacity: 0.5; }
+}
+
+.wave-bar {
+  height: 8px;
+  animation: wave 1.2s infinite ease-in-out;
+}
+
+input[type="range"] {
+  @apply accent-ink;
+}
+
+@keyframes authFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-fade {
+  animation: authFadeIn 0.6s ease both;
+}
