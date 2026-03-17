@@ -108,6 +108,41 @@ create policy "white_label_public_read" on storage.objects for select
 npm run dev
 ```
 
+## CI (GitHub Actions)
+
+Workflow CI sudah disiapkan untuk menjalankan:
+- `npm ci`
+- `npm run lint`
+- `npm run build`
+
+File workflow: `.github/workflows/ci.yml`
+
+Catatan:
+- CI menggunakan env dummy untuk `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` karena build membutuhkan variable tersebut.
+
+## Deployment
+
+### Build production
+
+```bash
+npm run build
+npm run start
+```
+
+### Env minimal production
+
+Isi `.env.local` pada server:
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY` (opsional jika ada server task admin)
+- `NEXT_PUBLIC_APP_URL` (atau `NEXT_PUBLIC_SITE_URL` untuk link demo/guest token)
+
+### Hosting
+
+Rekomendasi hosting:
+- Vercel (paling cepat untuk Next.js App Router)
+- VPS + Docker (jika ingin kontrol penuh)
+
 ## Struktur Route
 
 - `(marketing)` landing page
