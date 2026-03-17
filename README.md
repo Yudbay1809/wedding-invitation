@@ -2,6 +2,8 @@
 
 SaaS platform untuk undangan pernikahan digital berbasis Next.js (App Router), Supabase, dan Tailwind CSS.
 
+[![CI](https://github.com/Yudbay1809/wedding-invitation/actions/workflows/ci.yml/badge.svg)](https://github.com/Yudbay1809/wedding-invitation/actions/workflows/ci.yml)
+
 ## Setup
 
 1. Install dependencies
@@ -118,7 +120,9 @@ Workflow CI sudah disiapkan untuk menjalankan:
 File workflow: `.github/workflows/ci.yml`
 
 Catatan:
-- CI menggunakan env dummy untuk `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` karena build membutuhkan variable tersebut.
+- Set GitHub Secrets:
+  - `NEXT_PUBLIC_SUPABASE_URL`
+  - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ## Deployment
 
