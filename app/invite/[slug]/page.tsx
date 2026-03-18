@@ -306,11 +306,25 @@ export default async function InvitePage({
     </InviteSection>
   ) : null;
 
+  const closingSection = (
+    <InviteSection>
+      <section className="max-w-4xl mx-auto px-6 py-12 text-center">
+        <span className="pill pill-accent">Closing</span>
+        <h2 className="section-title mt-4">Sampai bertemu di hari bahagia</h2>
+        <p className="muted mt-3">
+          {invitation?.closing_message ?? "Terima kasih atas doa, restu, dan kehadiranmu dalam cerita kami."}
+        </p>
+      </section>
+    </InviteSection>
+  );
+
   const sections = invitation.theme === "minimal"
-    ? [eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection]
+    ? [eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]
     : invitation.theme === "romantic"
-      ? [storySection, eventSection, gallerySection, mapSection, rsvpSection, giftSection]
-      : [eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection];
+      ? [storySection, eventSection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]
+      : invitation.theme === "luxury"
+        ? [eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]
+        : [eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection];
 
   return (
     <main className={`bg-sand text-ink ${themeClass}`}>
@@ -320,7 +334,7 @@ export default async function InvitePage({
       />
       <InviteSection>
         <FadeParallax>
-          <section className={`min-h-screen flex flex-col justify-center px-6 py-16 gradient-hero ${layout.heroAlign} relative overflow-hidden`}>
+          <section className={`min-h-screen px-6 py-16 gradient-hero ${layout.heroAlign} relative overflow-hidden`}>
             {invitation.theme === "romantic" ? (
               <>
                 <FloatingOrnament className="absolute -top-24 -left-24 h-64 w-64 opacity-70" />
@@ -328,26 +342,81 @@ export default async function InvitePage({
                 <FloralParallaxLayer />
               </>
             ) : null}
-            <span className="pill pill-accent">The Wedding of</span>
-            <h1 className="text-4xl md:text-6xl font-semibold mt-6">
-              {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
-            </h1>
-            <div className="mt-4 flex items-center gap-3 text-sm text-graphite">
-              <Heart className="h-4 w-4" />
-              <span className={invitation.theme === "minimal" ? "mono" : ""}>{event?.akad_date ?? "21 Juni 2026"}</span>
-            </div>
-            <TypewriterText
-              className="mt-4 text-sm text-graphite max-w-xl"
-              text={invitation.opening_quote ?? "Dengan penuh rasa syukur kami mengundangmu untuk menjadi bagian dari hari bahagia kami."}
-            />
-            {guestName ? (
-              <p className="mt-6 text-sm bg-white px-4 py-2 rounded-full">Kepada Yth. {guestName}</p>
-            ) : null}
-            {invitation?.cover_image_url ? (
-              <Parallax strength={30}>
-                <div className="mt-8 h-60 w-full max-w-xl rounded-3xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${invitation.cover_image_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-              </Parallax>
-            ) : null}
+            {invitation.theme === "minimal" ? (
+              <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.2fr_1fr] gap-8 items-center">
+                <div className="flex flex-col gap-4">
+                  <span className="pill pill-accent">The Wedding of</span>
+                  <h1 className="text-4xl md:text-6xl font-semibold">
+                    {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
+                  </h1>
+                  <div className="flex items-center gap-3 text-sm text-graphite">
+                    <Heart className="h-4 w-4" />
+                    <span className="mono">{event?.akad_date ?? "21 Juni 2026"}</span>
+                  </div>
+                  <TypewriterText
+                    className="text-sm text-graphite max-w-xl"
+                    text={invitation.opening_quote ?? "Dengan penuh rasa syukur kami mengundangmu untuk menjadi bagian dari hari bahagia kami."}
+                  />
+                  {guestName ? (
+                    <p className="text-sm bg-white px-4 py-2 rounded-full w-fit">Kepada Yth. {guestName}</p>
+                  ) : null}
+                </div>
+                <div className="surface p-4">
+                  <div className="h-64 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: invitation?.cover_image_url ? `url(${invitation.cover_image_url})` : undefined, backgroundSize: "cover", backgroundPosition: "center" }} />
+                  <div className="mt-4 flex items-center justify-between text-xs text-graphite">
+                    <span>Save the date</span>
+                    <span className="mono">{event?.akad_date ?? "21 Juni 2026"}</span>
+                  </div>
+                </div>
+              </div>
+            ) : invitation.theme === "luxury" ? (
+              <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-4">
+                <span className="pill pill-accent">The Wedding of</span>
+                <h1 className="text-4xl md:text-6xl font-semibold">
+                  {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
+                </h1>
+                <div className="lux-divider w-40" />
+                <div className="flex items-center gap-3 text-sm text-graphite">
+                  <Heart className="h-4 w-4" />
+                  <span>{event?.akad_date ?? "21 Juni 2026"}</span>
+                </div>
+                <TypewriterText
+                  className="text-sm text-graphite max-w-xl"
+                  text={invitation.opening_quote ?? "Dengan penuh rasa syukur kami mengundangmu untuk menjadi bagian dari hari bahagia kami."}
+                />
+                {guestName ? (
+                  <p className="text-sm bg-white px-4 py-2 rounded-full">Kepada Yth. {guestName}</p>
+                ) : null}
+                {invitation?.cover_image_url ? (
+                  <Parallax strength={30}>
+                    <div className="mt-6 h-64 w-full max-w-xl rounded-3xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${invitation.cover_image_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                  </Parallax>
+                ) : null}
+              </div>
+            ) : (
+              <div className={`flex flex-col justify-center ${layout.heroAlign}`}>
+                <span className="pill pill-accent">The Wedding of</span>
+                <h1 className="text-4xl md:text-6xl font-semibold mt-6">
+                  {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
+                </h1>
+                <div className="mt-4 flex items-center gap-3 text-sm text-graphite">
+                  <Heart className="h-4 w-4" />
+                  <span className={invitation.theme === "minimal" ? "mono" : ""}>{event?.akad_date ?? "21 Juni 2026"}</span>
+                </div>
+                <TypewriterText
+                  className="mt-4 text-sm text-graphite max-w-xl"
+                  text={invitation.opening_quote ?? "Dengan penuh rasa syukur kami mengundangmu untuk menjadi bagian dari hari bahagia kami."}
+                />
+                {guestName ? (
+                  <p className="mt-6 text-sm bg-white px-4 py-2 rounded-full">Kepada Yth. {guestName}</p>
+                ) : null}
+                {invitation?.cover_image_url ? (
+                  <Parallax strength={30}>
+                    <div className="mt-8 h-60 w-full max-w-xl rounded-3xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${invitation.cover_image_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                  </Parallax>
+                ) : null}
+              </div>
+            )}
           </section>
         </FadeParallax>
       </InviteSection>
@@ -388,10 +457,6 @@ export default async function InvitePage({
           </SparkleLink>
         </div>
       ) : null}
-
-      <section className="py-16 text-center">
-        <p className="text-sm text-graphite">Terima kasih atas doa, restu, dan kehadiranmu dalam cerita kami.</p>
-      </section>
 
       {invitation?.show_watermark ? (
         <section className="pb-10 text-center">

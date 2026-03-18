@@ -116,6 +116,17 @@ h1, h2, h3, h4 {
   border-color: rgba(245, 158, 11, 0.35);
 }
 
+.theme-luxury h1,
+.theme-luxury h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.theme-luxury .pill {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
 .theme-romantic {
   font-family: var(--font-display);
 }
@@ -174,6 +185,13 @@ h1, h2, h3, h4 {
 .theme-celestial h1,
 .theme-celestial h2 {
   letter-spacing: 0.04em;
+}
+
+.theme-celestial {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.16), transparent 45%),
+    radial-gradient(circle at 90% 15%, rgba(14, 165, 233, 0.14), transparent 40%),
+    #f7f5fb;
 }
 
 .theme-luxury {
