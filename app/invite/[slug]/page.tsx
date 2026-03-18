@@ -98,7 +98,7 @@ export default async function InvitePage({
 
   const { data: invitation } = await supabase
     .from("invitations")
-    .select("id, title, slug, theme, published_at, enable_rsvp, cover_image_url, background_music, show_watermark, opening_quote")
+    .select("id, title, slug, theme, published_at, enable_rsvp, cover_image_url, background_music, show_watermark, opening_quote, closing_message")
     .eq("slug", slug)
     .single();
   if (!invitation) {
@@ -324,7 +324,7 @@ export default async function InvitePage({
         <span className="pill pill-accent">Closing</span>
         <h2 className="section-title mt-4">Sampai bertemu di hari bahagia</h2>
         <p className="muted mt-3">
-          {invitation?.closing_message ?? "Terima kasih atas doa, restu, dan kehadiranmu dalam cerita kami."}
+          {invitation?.closing_message || "Terima kasih atas doa, restu, dan kehadiranmu dalam cerita kami."}
         </p>
       </section>
     </InviteSection>
