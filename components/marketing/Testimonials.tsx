@@ -20,7 +20,7 @@ export function Testimonials() {
           {list.map((item) => (
             <StaggerItem key={item.name}>
               <div className="surface p-6 hover-lift">
-                <p className="text-sm text-graphite">"{item.quote}"</p>
+                <p className="text-sm text-graphite">&ldquo;{item.quote}&rdquo;</p>
                 <p className="text-sm font-semibold mt-4">{item.name}</p>
               </div>
             </StaggerItem>

@@ -11,7 +11,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           <p className="text-sm text-graphite mt-2">Kelola undangan dan data tamu dengan mudah.</p>
         </div>
         <div className="surface p-6">
-          <p className="text-sm text-graphite">"Pengalaman digitalnya rapi dan elegan. Tamu merasa diperhatikan."</p>
+          <p className="text-sm text-graphite">&ldquo;Pengalaman digitalnya rapi dan elegan. Tamu merasa diperhatikan.&rdquo;</p>
           <p className="text-xs uppercase tracking-[0.2em] text-graphite mt-4">Nadia & Irfan</p>
         </div>
       </div>

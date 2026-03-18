@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 export function GalleryLightbox({ images }: { images: string[] }) {
@@ -8,15 +8,15 @@ export function GalleryLightbox({ images }: { images: string[] }) {
 
   const active = activeIndex !== null ? images[activeIndex] : null;
 
-  const goPrev = () => {
+  const goPrev = useCallback(() => {
     if (activeIndex === null) return;
     setActiveIndex((activeIndex - 1 + images.length) % images.length);
-  };
+  }, [activeIndex, images.length]);
 
-  const goNext = () => {
+  const goNext = useCallback(() => {
     if (activeIndex === null) return;
     setActiveIndex((activeIndex + 1) % images.length);
-  };
+  }, [activeIndex, images.length]);
 
   useEffect(() => {
     if (activeIndex === null) return;
@@ -33,7 +33,7 @@ export function GalleryLightbox({ images }: { images: string[] }) {
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [activeIndex, images.length]);
+  }, [activeIndex, goNext, goPrev]);
 
   return (
     <>

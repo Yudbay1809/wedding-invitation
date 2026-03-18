@@ -15,7 +15,6 @@ export function MusicPlayer({ src }: { src?: string | null }) {
     if (!src) return;
     const audio = audioRef.current;
     if (!audio) return;
-    audio.volume = volume;
     const playOnLoad = async () => {
       try {
         await audio.play();

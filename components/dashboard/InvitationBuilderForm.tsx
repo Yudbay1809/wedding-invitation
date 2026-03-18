@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { BuilderSectionCollapsible } from "@/components/ui/BuilderSectionCollapsible";
 import { ThemeSelector } from "@/components/ui/ThemeSelector";
 import { Button } from "@/components/ui/Button";
@@ -73,7 +73,11 @@ export function InvitationBuilderForm({
   gallery,
   gift
 }: InvitationBuilderFormProps) {
-  const autosaveAction = saveInvitationBuilderWithFeedback.bind(null, invitationId);
+  const autosaveAction = useCallback(
+    (prevState: { ok: boolean; message: string }, formData: FormData) =>
+      saveInvitationBuilderWithFeedback(invitationId, prevState, formData),
+    [invitationId]
+  );
   const [state, formAction] = useFormState(autosaveAction, { ok: true, message: "" });
   const formRef = useRef<HTMLFormElement>(null);
   const [autosaveStatus, setAutosaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
@@ -84,7 +88,7 @@ export function InvitationBuilderForm({
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [errors, setErrors] = useState<ValidationErrors>({});
 
-  const validate = (formData: FormData) => {
+  const validate = useCallback((formData: FormData) => {
     const nextErrors: ValidationErrors = {};
     const title = String(formData.get("title") || "").trim();
     const slug = String(formData.get("slug") || "").trim();
@@ -102,7 +106,7 @@ export function InvitationBuilderForm({
 
     setErrors(nextErrors);
     return nextErrors;
-  };
+  }, []);
 
   useEffect(() => {
     if (!changeTick) return;
@@ -132,7 +136,7 @@ export function InvitationBuilderForm({
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [changeTick]);
+  }, [autosaveAction, changeTick, validate]);
 
   useEffect(() => {
     if (!state.message) return;
@@ -157,7 +161,7 @@ export function InvitationBuilderForm({
     autosaveStatus === "saving"
       ? "Menyimpan otomatis..."
       : autosaveStatus === "saved"
-        ? `Autosave ${lastSavedAt ? `• ${lastSavedAt}` : ""}`
+        ? `Autosave${lastSavedAt ? ` - ${lastSavedAt}` : ""}`
       : autosaveStatus === "error"
         ? "Gagal autosave"
         : "";
@@ -195,7 +199,7 @@ export function InvitationBuilderForm({
           >
             {toast.message}
             {toast.tone === "success" && lastSavedAt ? (
-              <span className="ml-2 text-xs text-emerald/70">• {lastSavedAt}</span>
+              <span className="ml-2 text-xs text-emerald/70">- {lastSavedAt}</span>
             ) : null}
           </div>
         </div>

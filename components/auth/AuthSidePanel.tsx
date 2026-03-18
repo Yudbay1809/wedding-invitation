@@ -31,7 +31,7 @@ export function AuthSidePanel({
         </div>
       </div>
       <div className="rounded-2xl bg-sand p-4 text-sm text-graphite">
-        <p className="font-semibold text-ink">"{highlight}"</p>
+        <p className="font-semibold text-ink">&ldquo;{highlight}&rdquo;</p>
         <p className="mt-2 text-xs">— Amelia & Fajar</p>
       </div>
     </div>

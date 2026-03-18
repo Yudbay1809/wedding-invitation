@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function Countdown({ date }: { date?: string | null }) {
-  const target = date ? new Date(date) : null;
+  const target = useMemo(() => (date ? new Date(date) : null), [date]);
   const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number } | null>(null);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export function Countdown({ date }: { date?: string | null }) {
     tick();
     const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
-  }, [date]);
+  }, [target]);
 
   if (!timeLeft) return null;
 
