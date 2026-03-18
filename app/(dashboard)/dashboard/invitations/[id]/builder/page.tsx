@@ -19,7 +19,7 @@ export default async function InvitationBuilderPage({ params }: { params: Promis
 
   const { data: couple } = await supabase
     .from("invitation_couples")
-    .select("bride_name, groom_name, bride_parents, groom_parents, love_story")
+    .select("bride_name, groom_name, bride_parents, groom_parents, bride_photo_url, groom_photo_url, love_story")
     .eq("invitation_id", resolvedParams.id)
     .single();
 

@@ -125,7 +125,7 @@ export default async function InvitePage({
 
   const { data: couple } = await supabase
     .from("invitation_couples")
-    .select("bride_name, groom_name, love_story")
+    .select("bride_name, groom_name, bride_photo_url, groom_photo_url, love_story")
     .eq("invitation_id", invitation?.id ?? "")
     .single();
 
@@ -226,6 +226,18 @@ export default async function InvitePage({
       <section className="max-w-4xl mx-auto px-6 py-12">
         <span className="pill pill-accent">Our Story</span>
         <h2 className="section-title mt-4">Kisah Kami</h2>
+        {(couple?.bride_photo_url || couple?.groom_photo_url) ? (
+          <div className="mt-6 grid md:grid-cols-2 gap-4">
+            <div className="surface p-4">
+              <div className="h-56 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: couple?.bride_photo_url ? `url(${couple.bride_photo_url})` : undefined, backgroundSize: "cover", backgroundPosition: "center" }} />
+              <p className="mt-3 text-sm text-graphite">{couple?.bride_name ?? "Bride"}</p>
+            </div>
+            <div className="surface p-4">
+              <div className="h-56 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: couple?.groom_photo_url ? `url(${couple.groom_photo_url})` : undefined, backgroundSize: "cover", backgroundPosition: "center" }} />
+              <p className="mt-3 text-sm text-graphite">{couple?.groom_name ?? "Groom"}</p>
+            </div>
+          </div>
+        ) : null}
         <p className="muted mt-3">{couple?.love_story ?? "Sebuah kisah cinta yang tumbuh dari pertemuan sederhana, lalu menjadi janji seumur hidup."}</p>
       </section>
     </InviteSection>

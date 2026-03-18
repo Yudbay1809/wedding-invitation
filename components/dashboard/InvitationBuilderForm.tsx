@@ -39,6 +39,8 @@ type InvitationBuilderFormProps = {
     groom_name: string | null;
     bride_parents: string | null;
     groom_parents: string | null;
+    bride_photo_url?: string | null;
+    groom_photo_url?: string | null;
     love_story: string | null;
   } | null;
   event: {
@@ -295,6 +297,24 @@ export function InvitationBuilderForm({
             <input name="groom_name" placeholder="Groom name" defaultValue={couple?.groom_name ?? ""} className="rounded-xl border border-black/10 px-4 py-3" />
             <input name="bride_parents" placeholder="Bride parents" defaultValue={couple?.bride_parents ?? ""} className="rounded-xl border border-black/10 px-4 py-3" />
             <input name="groom_parents" placeholder="Groom parents" defaultValue={couple?.groom_parents ?? ""} className="rounded-xl border border-black/10 px-4 py-3" />
+            <input type="hidden" name="existing_bride_photo" value={couple?.bride_photo_url ?? ""} />
+            <input type="hidden" name="existing_groom_photo" value={couple?.groom_photo_url ?? ""} />
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <label className="text-sm text-ink/60">Bride photo</label>
+                <input name="bride_photo" type="file" className="rounded-xl border border-black/10 px-4 py-3" />
+                {couple?.bride_photo_url ? (
+                  <div className="h-32 rounded-xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${couple.bride_photo_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                ) : null}
+              </div>
+              <div className="grid gap-2">
+                <label className="text-sm text-ink/60">Groom photo</label>
+                <input name="groom_photo" type="file" className="rounded-xl border border-black/10 px-4 py-3" />
+                {couple?.groom_photo_url ? (
+                  <div className="h-32 rounded-xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${couple.groom_photo_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                ) : null}
+              </div>
+            </div>
             <textarea name="love_story" placeholder="Love story" defaultValue={couple?.love_story ?? ""} className="rounded-xl border border-black/10 px-4 py-3" rows={4} />
           </BuilderSectionCollapsible>
 

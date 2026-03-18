@@ -85,12 +85,37 @@ export async function saveInvitationBuilder(invitationId: string, formData: Form
     throw new Error(invitationError.message);
   }
 
+  let bridePhotoUrl = String(formData.get("existing_bride_photo") || "");
+  let groomPhotoUrl = String(formData.get("existing_groom_photo") || "");
+
+  const bridePhoto = formData.get("bride_photo");
+  if (bridePhoto instanceof File && bridePhoto.name) {
+    const path = `${userData.user.id}/${invitationId}/bride-${Date.now()}-${bridePhoto.name}`;
+    const { error: uploadError } = await supabase.storage.from("couple-photos").upload(path, bridePhoto, { upsert: true });
+    if (uploadError) {
+      throw new Error(uploadError.message);
+    }
+    bridePhotoUrl = supabase.storage.from("couple-photos").getPublicUrl(path).data.publicUrl;
+  }
+
+  const groomPhoto = formData.get("groom_photo");
+  if (groomPhoto instanceof File && groomPhoto.name) {
+    const path = `${userData.user.id}/${invitationId}/groom-${Date.now()}-${groomPhoto.name}`;
+    const { error: uploadError } = await supabase.storage.from("couple-photos").upload(path, groomPhoto, { upsert: true });
+    if (uploadError) {
+      throw new Error(uploadError.message);
+    }
+    groomPhotoUrl = supabase.storage.from("couple-photos").getPublicUrl(path).data.publicUrl;
+  }
+
   const couplesPayload = {
     invitation_id: invitationId,
     bride_name: String(formData.get("bride_name") || ""),
     groom_name: String(formData.get("groom_name") || ""),
     bride_parents: String(formData.get("bride_parents") || ""),
     groom_parents: String(formData.get("groom_parents") || ""),
+    bride_photo_url: bridePhotoUrl || null,
+    groom_photo_url: groomPhotoUrl || null,
     love_story: String(formData.get("love_story") || "")
   };
 
