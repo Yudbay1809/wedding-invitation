@@ -8,15 +8,38 @@ const cormorant = Cormorant_Garamond({ subsets: ["latin"], variable: "--font-dis
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-body", weight: ["400", "500", "600", "700"] });
 const spaceMono = Space_Mono({ subsets: ["latin"], variable: "--font-mono", weight: ["400", "700"] });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "WedSaaS - Wedding Invitations Platform",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "WedSaaS - Wedding Invitations Platform",
+    template: "%s | WedSaaS"
+  },
   description: "Build, share, and manage beautiful digital wedding invitations at scale.",
   openGraph: {
     title: "WedSaaS",
     description: "Build, share, and manage beautiful digital wedding invitations at scale.",
-    url: "http://localhost:3000",
+    url: siteUrl,
     siteName: "WedSaaS",
-    type: "website"
+    type: "website",
+    images: [
+      {
+        url: "/assets/hero-photo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "WedSaaS"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "WedSaaS",
+    description: "Build, share, and manage beautiful digital wedding invitations at scale.",
+    images: ["/assets/hero-photo.jpg"]
+  },
+  alternates: {
+    canonical: siteUrl
   }
 };
 
