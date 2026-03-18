@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/ui/DataTable";
 import { StatCard } from "@/components/ui/StatCard";
 import { createServerSupabase } from "@/lib/supabase/server";
-import { updateTenantPlan } from "@/app/actions/admin";
+import { updateTenantSubscription } from "@/app/actions/admin";
 import { AdminInvitationBulkTable } from "@/components/admin/AdminInvitationBulkTable";
 
 export default async function AdminPage() {
@@ -41,6 +41,13 @@ export default async function AdminPage() {
     else planCounts.free += 1;
   });
 
+  const statusCounts = { active: 0, suspended: 0, inactive: 0 };
+  (subscriptions ?? []).forEach((sub) => {
+    if (sub.status === "suspended") statusCounts.suspended += 1;
+    else if (sub.status === "inactive") statusCounts.inactive += 1;
+    else statusCounts.active += 1;
+  });
+
   const invitationCount = new Map<string, number>();
   (invitations ?? []).forEach((invitation) => {
     invitationCount.set(invitation.user_id, (invitationCount.get(invitation.user_id) ?? 0) + 1);
@@ -52,14 +59,19 @@ export default async function AdminPage() {
       profile.full_name ?? profile.id,
       String(invitationCount.get(profile.id) ?? 0),
       subscription?.status ?? "inactive",
-      <form action={updateTenantPlan} key={profile.id}>
+      <form action={updateTenantSubscription} key={profile.id} className="flex flex-wrap items-center gap-2">
         <input type="hidden" name="user_id" value={profile.id} />
         <select name="plan" defaultValue={subscription?.plan ?? "free"} className="rounded-lg border border-black/10 px-2 py-1 text-xs">
           <option value="free">FREE</option>
           <option value="premium">PREMIUM</option>
           <option value="business">BUSINESS</option>
         </select>
-        <button className="ml-2 text-xs text-emerald" type="submit">Save</button>
+        <select name="status" defaultValue={subscription?.status ?? "active"} className="rounded-lg border border-black/10 px-2 py-1 text-xs">
+          <option value="active">ACTIVE</option>
+          <option value="suspended">SUSPENDED</option>
+          <option value="inactive">INACTIVE</option>
+        </select>
+        <button className="text-xs text-emerald" type="submit">Save</button>
       </form>
     ];
   });
@@ -111,6 +123,11 @@ export default async function AdminPage() {
             <StatCard label="Tenant Aktif" value={`${totalTenants}`} />
             <StatCard label="Total Undangan" value={`${totalInvitations}`} />
             <StatCard label="Views" value={`${totalViews ?? 0}`} />
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2 text-xs text-graphite">
+            <span className="chip">Active: {statusCounts.active}</span>
+            <span className="chip">Suspended: {statusCounts.suspended}</span>
+            <span className="chip">Inactive: {statusCounts.inactive}</span>
           </div>
         </div>
 
@@ -207,7 +224,7 @@ export default async function AdminPage() {
         <h3 className="text-lg font-semibold">Tenant Overview</h3>
         <p className="text-sm text-ink/60">Status plan dan jumlah undangan.</p>
         <div className="mt-4">
-          <DataTable headers={["Tenant", "Invitations", "Status", "Plan"]} rows={rows} />
+          <DataTable headers={["Tenant", "Invitations", "Status", "Plan & Status"]} rows={rows} />
         </div>
       </div>
 

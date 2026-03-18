@@ -5,14 +5,15 @@ import { resolveCheckoutTheme } from "@/lib/plans";
 import { calculateCheckoutPrice } from "@/lib/pricing";
 import { revalidatePath } from "next/cache";
 
-export async function updateTenantPlan(formData: FormData) {
+export async function updateTenantSubscription(formData: FormData) {
   const { supabase } = await requireAdmin();
   const userId = String(formData.get("user_id"));
   const plan = String(formData.get("plan"));
+  const status = String(formData.get("status") || "active");
 
   const { error } = await supabase
     .from("subscriptions")
-    .upsert({ user_id: userId, plan, status: "active" });
+    .upsert({ user_id: userId, plan, status });
 
   if (error) {
     throw new Error(error.message);
