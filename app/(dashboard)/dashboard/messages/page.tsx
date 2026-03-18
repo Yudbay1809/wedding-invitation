@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { GuestMessagesBulkTable } from "@/components/dashboard/GuestMessagesBulkTable";
+import { StatCard } from "@/components/ui/StatCard";
+import { EmptyState } from "@/components/ui/EmptyState";
 
 export default async function GuestMessagesPage({
   searchParams
@@ -35,11 +37,33 @@ export default async function GuestMessagesPage({
 
   const { data: messages } = await query;
 
+  const { count: totalMessages } = await supabase
+    .from("guest_messages")
+    .select("*", { count: "exact", head: true })
+    .in("invitation_id", invitationIds.length ? invitationIds : [""]);
+
+  const { count: hiddenMessages } = await supabase
+    .from("guest_messages")
+    .select("*", { count: "exact", head: true })
+    .eq("is_hidden", true)
+    .in("invitation_id", invitationIds.length ? invitationIds : [""]);
+
+  const { count: visibleMessages } = await supabase
+    .from("guest_messages")
+    .select("*", { count: "exact", head: true })
+    .eq("is_hidden", false)
+    .in("invitation_id", invitationIds.length ? invitationIds : [""]);
+
   return (
     <div className="grid gap-6">
       <div>
         <h2 className="text-xl font-semibold">Guest Messages</h2>
         <p className="text-sm text-ink/60">Moderasi ucapan tamu.</p>
+      </div>
+      <div className="grid md:grid-cols-3 gap-4">
+        <StatCard label="Total Messages" value={`${totalMessages ?? 0}`} />
+        <StatCard label="Visible" value={`${visibleMessages ?? 0}`} />
+        <StatCard label="Hidden" value={`${hiddenMessages ?? 0}`} />
       </div>
       <div className="flex items-center gap-2 text-sm">
         <Link href="/dashboard/messages" className={statusFilter === "all" ? "text-ink font-semibold" : "text-graphite"}>
@@ -54,7 +78,16 @@ export default async function GuestMessagesPage({
           Hidden
         </Link>
       </div>
-      <GuestMessagesBulkTable messages={messages ?? []} />
+      {messages && messages.length > 0 ? (
+        <GuestMessagesBulkTable messages={messages} />
+      ) : (
+        <EmptyState
+          title="Belum ada ucapan"
+          description="Ucapan tamu akan muncul setelah undangan dibagikan."
+          actionLabel="Lihat Undangan"
+          actionHref="/dashboard/invitations"
+        />
+      )}
     </div>
   );
 }

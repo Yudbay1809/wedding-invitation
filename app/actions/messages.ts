@@ -47,6 +47,8 @@ export async function setGuestMessageVisibility(formData: FormData) {
   if (error) {
     throw new Error(error.message);
   }
+
+  revalidatePath("/dashboard/messages");
 }
 
 export async function bulkSetGuestMessageVisibility(formData: FormData) {
@@ -66,4 +68,6 @@ export async function bulkSetGuestMessageVisibility(formData: FormData) {
   if (error) {
     throw new Error(error.message);
   }
+
+  revalidatePath("/dashboard/messages");
 }
