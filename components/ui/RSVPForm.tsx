@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react-dom";
 import { Button } from "./Button";
 
 type FormState = { ok: boolean; message: string };
@@ -28,7 +28,7 @@ export function RSVPForm({
   hideName?: boolean;
   guestToken?: string;
 }) {
-  const [state, formAction] = useFormState(action, { ok: false, message: "" });
+  const [state, formAction] = useActionState(action, { ok: false, message: "" });
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
@@ -88,3 +88,4 @@ export function RSVPForm({
     </div>
   );
 }
+

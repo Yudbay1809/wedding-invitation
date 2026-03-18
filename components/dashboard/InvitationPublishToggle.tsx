@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { useFormState } from "react-dom";
+import { useActionState } from "react-dom";
 import { useEffect, useState } from "react";
 import { setInvitationStatusWithFeedback } from "@/app/actions/invitations";
 
@@ -15,7 +15,7 @@ export function InvitationPublishToggle({
 }) {
   const nextStatus = status === "published" ? "draft" : "published";
   const action = setInvitationStatusWithFeedback.bind(null, invitationId, nextStatus);
-  const [state, formAction] = useFormState(action, { ok: true, message: "" });
+  const [state, formAction] = useActionState(action, { ok: true, message: "" });
   const [toast, setToast] = useState<{ message: string; tone: "success" | "error" } | null>(null);
 
   useEffect(() => {

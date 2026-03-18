@@ -39,6 +39,7 @@ export function Hero() {
               src="/assets/hero-photo.jpg"
               alt="Wedding invitation flat lay"
               fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
               priority
             />

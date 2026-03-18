@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BuilderSectionCollapsible } from "@/components/ui/BuilderSectionCollapsible";
 import { ThemeSelector } from "@/components/ui/ThemeSelector";
 import { Button } from "@/components/ui/Button";
 import { saveInvitationBuilderWithFeedback } from "@/app/actions/builder";
-import { useFormState } from "react-dom";
+import { useActionState } from "react-dom";
 import { PLAN_FEATURES } from "@/lib/plans";
 import Link from "next/link";
 
@@ -80,7 +80,7 @@ export function InvitationBuilderForm({
       saveInvitationBuilderWithFeedback(invitationId, prevState, formData),
     [invitationId]
   );
-  const [state, formAction] = useFormState(autosaveAction, { ok: true, message: "" });
+  const [state, formAction] = useActionState(autosaveAction, { ok: true, message: "" });
   const formRef = useRef<HTMLFormElement>(null);
   const [autosaveStatus, setAutosaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [changeTick, setChangeTick] = useState(0);
@@ -429,3 +429,4 @@ export function InvitationBuilderForm({
     </form>
   );
 }
+

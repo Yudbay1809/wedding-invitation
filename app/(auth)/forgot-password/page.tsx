@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { resetPasswordWithFeedback } from "@/app/actions/auth";
 import { Button } from "@/components/ui/Button";
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react-dom";
 import { AuthSidePanel } from "@/components/auth/AuthSidePanel";
 
 type FormState = { ok: boolean; message: string };
@@ -25,7 +25,7 @@ function SubmitButton() {
 }
 
 export default function ForgotPasswordPage() {
-  const [state, formAction] = useFormState(resetPasswordWithFeedback, { ok: false, message: "" });
+  const [state, formAction] = useActionState(resetPasswordWithFeedback, { ok: false, message: "" });
 
   return (
     <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-stretch auth-fade">
@@ -53,3 +53,4 @@ export default function ForgotPasswordPage() {
     </div>
   );
 }
+

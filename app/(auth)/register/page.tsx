@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { signUpWithFeedback } from "@/app/actions/auth";
 import { Button } from "@/components/ui/Button";
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react-dom";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AuthSidePanel } from "@/components/auth/AuthSidePanel";
@@ -27,7 +27,7 @@ function SubmitButton() {
 }
 
 export default function RegisterPage() {
-  const [state, formAction] = useFormState(signUpWithFeedback, { ok: false, message: "" });
+  const [state, formAction] = useActionState(signUpWithFeedback, { ok: false, message: "" });
   const router = useRouter();
 
   useEffect(() => {
@@ -63,3 +63,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+

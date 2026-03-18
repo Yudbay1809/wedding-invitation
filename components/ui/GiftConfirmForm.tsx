@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react-dom";
 
 type FormState = { ok: boolean; message: string };
 
@@ -19,7 +19,7 @@ export function GiftConfirmForm({
 }: {
   action: (prevState: FormState, formData: FormData) => Promise<FormState>;
 }) {
-  const [state, formAction] = useFormState(action, { ok: false, message: "" });
+  const [state, formAction] = useActionState(action, { ok: false, message: "" });
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
@@ -52,3 +52,4 @@ export function GiftConfirmForm({
     </div>
   );
 }
+

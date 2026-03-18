@@ -24,15 +24,15 @@ export function AdminInvitationBulkTable({
   };
 
   return (
-    <form action={bulkUpdateInvitationStatus} className="grid gap-4">
-      <div className="flex flex-wrap items-center gap-3 text-sm">
+    <div className="grid gap-4">
+      <form id="bulk-invitations" action={bulkUpdateInvitationStatus} className="flex flex-wrap items-center gap-3 text-sm">
         <select name="bulk_status" className="rounded-lg border border-black/10 px-3 py-2 text-sm">
           <option value="archived">Suspend Selected</option>
           <option value="published">Publish Selected</option>
           <option value="draft">Set Draft</option>
         </select>
         <button className="text-sm text-emerald" type="submit">Apply Bulk Action</button>
-      </div>
+      </form>
       <div className="surface overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-sand text-graphite">
@@ -62,6 +62,7 @@ export function AdminInvitationBulkTable({
                     type="checkbox"
                     name="invitation_ids"
                     value={inv.id}
+                    form="bulk-invitations"
                     checked={!!selected[inv.id]}
                     onChange={(event) => toggleOne(inv.id, event.target.checked)}
                   />
@@ -86,6 +87,6 @@ export function AdminInvitationBulkTable({
           </tbody>
         </table>
       </div>
-    </form>
+    </div>
   );
 }
