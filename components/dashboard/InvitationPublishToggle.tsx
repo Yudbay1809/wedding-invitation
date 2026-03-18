@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useActionState } from "react-dom";
+import { useActionState } from "react";
 import { useEffect, useState } from "react";
 import { setInvitationStatusWithFeedback } from "@/app/actions/invitations";
 
@@ -61,3 +61,5 @@ export function InvitationPublishToggle({
     </>
   );
 }
+
+
