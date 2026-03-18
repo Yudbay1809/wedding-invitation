@@ -171,6 +171,18 @@ export function InvitationBuilderForm({
   const previewSlug = invitation.slug ?? "";
   const previewHref = previewSlug ? `/invite/${previewSlug}` : "#";
   const statusLabelText = invitation.status === "published" ? "Published" : "Draft";
+  const sectionItems = [
+    { id: "basic-info", label: "Basic Info" },
+    { id: "couple-info", label: "Couple Info" },
+    { id: "event-details", label: "Event Details" },
+    { id: "additional-content", label: "Additional Content" },
+    { id: "gallery", label: "Gallery" },
+    { id: "rsvp-settings", label: "RSVP Settings" },
+    { id: "digital-gift", label: "Digital Gift" },
+    { id: "theme-settings", label: "Theme Settings" },
+    { id: "branding", label: "Branding" },
+    { id: "publish-settings", label: "Publish Settings" }
+  ];
 
   return (
     <form
@@ -204,12 +216,28 @@ export function InvitationBuilderForm({
           </div>
         </div>
       ) : null}
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 className="text-xl font-semibold">Invitation Builder</h2>
           <p className="text-sm text-ink/60">ID: {invitationId}</p>
         </div>
-        <div className="text-xs text-ink/60">{statusLabel}</div>
+        <div className="flex flex-wrap items-center gap-3 text-xs text-ink/60">
+          <span className="rounded-full border border-black/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em]">
+            {statusLabelText}
+          </span>
+          <a
+            href={previewHref}
+            className={`rounded-full border px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em] ${
+              previewSlug ? "border-ink text-ink hover:bg-ink hover:text-white" : "border-black/10 text-ink/40 pointer-events-none"
+            }`}
+          >
+            Preview
+          </a>
+          <a href="#publish-settings" className="rounded-full border border-black/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.2em] hover:bg-sand">
+            Publish
+          </a>
+          {statusLabel ? <span className="text-ink/60">{statusLabel}</span> : null}
+        </div>
       </div>
 
       {state.message ? (
@@ -221,32 +249,30 @@ export function InvitationBuilderForm({
       <div className="grid lg:grid-cols-[240px_1fr] gap-6">
         <aside className="hidden lg:block">
           <div className="sticky top-24 space-y-2 text-sm">
-            {[
-              { id: "basic-info", label: "Basic Info" },
-              { id: "couple-info", label: "Couple Info" },
-              { id: "event-details", label: "Event Details" },
-              { id: "additional-content", label: "Additional Content" },
-              { id: "gallery", label: "Gallery" },
-              { id: "rsvp-settings", label: "RSVP Settings" },
-              { id: "digital-gift", label: "Digital Gift" },
-              { id: "theme-settings", label: "Theme Settings" },
-              { id: "branding", label: "Branding" },
-              { id: "publish-settings", label: "Publish Settings" }
-            ].map((item) => (
+            {sectionItems.map((item) => (
               <a key={item.id} href={`#${item.id}`} className="block rounded-full px-3 py-2 text-graphite hover:bg-sand hover:text-ink">
                 {item.label}
               </a>
             ))}
           </div>
         </aside>
+        <div className="lg:hidden sticky top-20 z-10 -mx-4 px-4 py-2 bg-sand/80 backdrop-blur border-y border-black/5">
+          <div className="flex gap-2 overflow-x-auto text-xs">
+            {sectionItems.map((item) => (
+              <a key={item.id} href={`#${item.id}`} className="whitespace-nowrap rounded-full border border-black/10 px-3 py-1 text-graphite hover:bg-white">
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
         <div className="grid gap-6">
           <BuilderSectionCollapsible id="basic-info" title="Basic Info" description="Judul, slug, dan status undangan.">
             <div className="grid gap-2">
-              <input name="title" placeholder="Invitation title" defaultValue={invitation.title ?? ""} className="rounded-xl border border-black/10 px-4 py-3" />
+              <input name="title" placeholder="Invitation title" defaultValue={invitation.title ?? ""} className="rounded-xl border border-black/10 px-4 py-3" required />
               {errors.title ? <span className="text-xs text-rose-600">{errors.title}</span> : null}
             </div>
             <div className="grid gap-2">
-              <input name="slug" placeholder="Slug" defaultValue={invitation.slug ?? ""} className="rounded-xl border border-black/10 px-4 py-3" />
+              <input name="slug" placeholder="Slug" defaultValue={invitation.slug ?? ""} className="rounded-xl border border-black/10 px-4 py-3" required />
               {errors.slug ? <span className="text-xs text-rose-600">{errors.slug}</span> : <span className="text-xs text-graphite">Contoh: raisa-dimas</span>}
             </div>
             <select name="status" className="rounded-xl border border-black/10 px-4 py-3" defaultValue={invitation.status ?? "draft"}>
@@ -275,7 +301,7 @@ export function InvitationBuilderForm({
           <BuilderSectionCollapsible id="event-details" title="Event Details" description="Detail akad dan resepsi.">
             <div className="grid md:grid-cols-2 gap-3">
               <div className="grid gap-2">
-                <input name="akad_date" type="date" defaultValue={event?.akad_date ?? ""} className="rounded-xl border border-black/10 px-4 py-3" />
+                <input name="akad_date" type="date" defaultValue={event?.akad_date ?? ""} className="rounded-xl border border-black/10 px-4 py-3" required />
                 {errors.akad_date ? <span className="text-xs text-rose-600">{errors.akad_date}</span> : null}
               </div>
               <input name="akad_time" type="time" defaultValue={event?.akad_time ?? ""} className="rounded-xl border border-black/10 px-4 py-3" />
@@ -283,7 +309,7 @@ export function InvitationBuilderForm({
             <input name="akad_venue" placeholder="Akad venue" defaultValue={event?.akad_venue ?? ""} className="rounded-xl border border-black/10 px-4 py-3" />
             <div className="grid md:grid-cols-2 gap-3">
               <div className="grid gap-2">
-                <input name="reception_date" type="date" defaultValue={event?.reception_date ?? ""} className="rounded-xl border border-black/10 px-4 py-3" />
+                <input name="reception_date" type="date" defaultValue={event?.reception_date ?? ""} className="rounded-xl border border-black/10 px-4 py-3" required />
                 {errors.reception_date ? <span className="text-xs text-rose-600">{errors.reception_date}</span> : null}
               </div>
               <input name="reception_time" type="time" defaultValue={event?.reception_time ?? ""} className="rounded-xl border border-black/10 px-4 py-3" />
