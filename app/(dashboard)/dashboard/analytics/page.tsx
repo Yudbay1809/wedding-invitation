@@ -4,6 +4,7 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { getUserPlan } from "@/lib/subscription";
 import { PLAN_FEATURES } from "@/lib/plans";
 import { format, startOfDay, subDays } from "date-fns";
+import { EmptyState } from "@/components/ui/EmptyState";
 
 export default async function AnalyticsPage() {
   const supabase = await createServerSupabase();
@@ -25,6 +26,18 @@ export default async function AnalyticsPage() {
     .eq("user_id", userData.user?.id ?? "");
 
   const invitationIds = (invitations ?? []).map((item) => item.id);
+  const hasInvitations = invitationIds.length > 0;
+
+  if (!hasInvitations) {
+    return (
+      <EmptyState
+        title="Analytics belum tersedia"
+        description="Buat undangan dan bagikan link untuk mulai mengumpulkan data."
+        actionLabel="Buat Undangan"
+        actionHref="/dashboard/create"
+      />
+    );
+  }
 
   const { count: viewCount } = await supabase
     .from("invitation_views")
@@ -91,6 +104,8 @@ export default async function AnalyticsPage() {
     if (bucket) bucket.messages += 1;
   });
 
+  const hasAnyTrend = dayBuckets.some((bucket) => bucket.views + bucket.rsvps + bucket.messages > 0);
+
   return (
     <div className="grid gap-6">
       <div className="grid md:grid-cols-4 gap-4">
@@ -99,6 +114,12 @@ export default async function AnalyticsPage() {
         <StatCard label="Message Count" value={`${messageCount ?? 0}`} />
         <StatCard label="Gift Confirmations" value={`${giftCount ?? 0}`} />
       </div>
+      {!hasAnyTrend ? (
+        <div className="surface p-6">
+          <h3 className="text-lg font-semibold">Belum ada aktivitas</h3>
+          <p className="text-sm text-graphite mt-2">Bagikan link undangan untuk mulai melihat tren views, RSVP, dan ucapan.</p>
+        </div>
+      ) : null}
       <div className="grid lg:grid-cols-3 gap-6">
         <AnalyticsChart
           title="Views 7 Hari Terakhir"
