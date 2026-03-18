@@ -21,8 +21,18 @@ export function ThemeSelector({
   return (
     <div className="grid grid-cols-2 gap-3">
       {themes.map((theme) => (
-        <label key={theme.id} className="surface p-4 flex items-center justify-between">
-          <span className="text-sm font-semibold text-ink">{theme.name}</span>
+        <label
+          key={theme.id}
+          className={`surface p-4 flex items-center justify-between ${
+            disabledIds.includes(theme.id) ? "opacity-50" : ""
+          }`}
+        >
+          <div className="grid gap-1">
+            <span className="text-sm font-semibold text-ink">{theme.name}</span>
+            {disabledIds.includes(theme.id) ? (
+              <span className="text-[0.65rem] uppercase tracking-[0.2em] text-graphite">Locked</span>
+            ) : null}
+          </div>
           <input
             type="radio"
             name={name}

@@ -3,7 +3,7 @@
 import { createServerSupabase } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { canCreateInvitation } from "@/lib/plans";
+import { canCreateInvitation, DEFAULT_THEME_BY_PLAN, THEME_ACCESS } from "@/lib/plans";
 import { getUserPlan } from "@/lib/subscription";
 
 export async function createInvitation(formData: FormData) {
@@ -28,7 +28,9 @@ export async function createInvitation(formData: FormData) {
     throw new Error("Upgrade plan untuk membuat lebih banyak undangan.");
   }
 
-  const theme = themeInput || "classic";
+  const allowedThemes = THEME_ACCESS[plan] ?? ["classic"];
+  const fallbackTheme = DEFAULT_THEME_BY_PLAN[plan] ?? "classic";
+  const theme = allowedThemes.includes(themeInput) ? themeInput : fallbackTheme;
   const { data, error } = await supabase
     .from("invitations")
     .insert({

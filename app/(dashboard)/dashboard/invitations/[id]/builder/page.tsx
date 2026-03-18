@@ -1,6 +1,7 @@
 import { InvitationBuilderForm } from "@/components/dashboard/InvitationBuilderForm";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { getUserPlan } from "@/lib/subscription";
+import { ALL_THEMES, THEME_ACCESS } from "@/lib/plans";
 import { notFound } from "next/navigation";
 
 export default async function InvitationBuilderPage({ params }: { params: Promise<{ id: string }> }) {
@@ -41,7 +42,10 @@ export default async function InvitationBuilderPage({ params }: { params: Promis
     .eq("invitation_id", resolvedParams.id)
     .single();
 
-  const disabledThemes = invitation.theme_locked ? ["classic", "minimal", "romantic", "luxury"] : [];
+  const allowedThemes = THEME_ACCESS[plan];
+  const disabledThemes = invitation.theme_locked
+    ? ALL_THEMES
+    : ALL_THEMES.filter((theme) => !allowedThemes.includes(theme));
 
   return (
     <InvitationBuilderForm

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { BuilderSection } from "@/components/ui/BuilderSection";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { getUserPlan } from "@/lib/subscription";
-import { canCreateInvitation } from "@/lib/plans";
+import { canCreateInvitation, DEFAULT_THEME_BY_PLAN, THEME_ACCESS } from "@/lib/plans";
 
 export default async function CreateInvitationPage() {
   const supabase = await createServerSupabase();
@@ -14,7 +14,8 @@ export default async function CreateInvitationPage() {
     .eq("user_id", userId ?? "");
 
   const canCreate = canCreateInvitation(plan, invitationCount ?? 0);
-  const defaultTheme = "classic";
+  const defaultTheme = DEFAULT_THEME_BY_PLAN[plan] ?? "classic";
+  const allowedThemes = THEME_ACCESS[plan];
 
   return (
     <form className="grid gap-6" action={createInvitation}>
@@ -29,9 +30,12 @@ export default async function CreateInvitationPage() {
           <option value="published">Published</option>
         </select>
       </BuilderSection>
-      <BuilderSection title="Theme Settings" description="Tema akan ditentukan admin saat transaksi.">
+      <BuilderSection title="Theme Settings" description="Tema mengikuti paket aktif. Upgrade untuk membuka tema premium.">
         <div className="rounded-xl border border-black/10 px-4 py-3 text-sm text-graphite">
           Tema aktif: <span className="font-semibold text-ink">{defaultTheme}</span>
+        </div>
+        <div className="mt-3 text-xs text-graphite">
+          Tema tersedia: {allowedThemes.join(", ")}
         </div>
         <input type="hidden" name="theme" value={defaultTheme} />
       </BuilderSection>

@@ -2,7 +2,7 @@
 
 import { createServerSupabase } from "@/lib/supabase/server";
 import { getUserPlan } from "@/lib/subscription";
-import { PLAN_FEATURES } from "@/lib/plans";
+import { PLAN_FEATURES, THEME_ACCESS } from "@/lib/plans";
 import { revalidatePath } from "next/cache";
 
 const normalizeBoolean = (value: FormDataEntryValue | null) => value === "on" || value === "true";
@@ -28,7 +28,7 @@ export async function saveInvitationBuilder(invitationId: string, formData: Form
     .eq("id", invitationId)
     .eq("user_id", userData.user.id)
     .maybeSingle();
-  const allowedThemes = ["classic", "minimal", "romantic", "luxury"];
+  const allowedThemes = THEME_ACCESS[plan] ?? ["classic"];
   const currentTheme = currentInvitation?.theme ?? "classic";
   const themeLocked = currentInvitation?.theme_locked ?? false;
   const theme = themeLocked

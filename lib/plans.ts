@@ -61,6 +61,17 @@ export const DEFAULT_THEME_BY_PLAN: Record<Plan, "classic" | "minimal" | "romant
 
 export type ThemeId = "classic" | "minimal" | "romantic" | "luxury" | "boho" | "garden" | "modern" | "celestial";
 
+export const ALL_THEMES: ThemeId[] = [
+  "classic",
+  "minimal",
+  "romantic",
+  "luxury",
+  "boho",
+  "garden",
+  "modern",
+  "celestial"
+];
+
 export function resolveCheckoutTheme(plan: Plan, addonTheme?: string) {
   const baseTheme = DEFAULT_THEME_BY_PLAN[plan] ?? "classic";
   const addon = (addonTheme || "").toLowerCase();
