@@ -76,15 +76,15 @@ const themeLayout = {
 } as const;
 
 const fallbackGallery = [
-  "/assets/gallery-1.jpg",
-  "/assets/gallery-2.jpg",
-  "/assets/gallery-3.jpg",
-  "/assets/hero-photo.jpg"
+  "/assets/wedding-1.jpg",
+  "/assets/wedding-2.jpg",
+  "/assets/wedding-3.jpg",
+  "/assets/wedding-4.jpg"
 ];
 
 const fallbackCouplePhotos = [
-  "/assets/gallery-1.jpg",
-  "/assets/gallery-2.jpg"
+  "/assets/wedding-1.jpg",
+  "/assets/wedding-2.jpg"
 ];
 
 export default async function InvitePage({
@@ -155,7 +155,7 @@ export default async function InvitePage({
 
   const themeClass = themeClassMap[invitation.theme] ?? "theme-classic";
   const layout = themeLayout[invitation.theme as keyof typeof themeLayout] ?? themeLayout.classic;
-  const coverImage = invitation?.cover_image_url ?? "/assets/hero-photo.jpg";
+  const coverImage = invitation?.cover_image_url ?? "/assets/wedding-4.jpg";
 
   const eventCards = (
     <InviteStagger>
