@@ -541,27 +541,66 @@ export default async function InvitePage({
             {invitation.theme === "minimal" ? (
               <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.2fr_1fr] gap-8 items-center relative z-10">
                 <div className="flex flex-col gap-4">
-                  <span className="pill pill-accent">The Wedding of</span>
+                  <div className="flex items-center gap-3">
+                    <span className="pill pill-accent">The Wedding of</span>
+                    <span className="chip">Minimal Modern</span>
+                  </div>
                   <h1 className="text-4xl md:text-6xl font-semibold">
                     {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
                   </h1>
                   <div className="flex items-center gap-3 text-sm text-graphite">
                     <Heart className="h-4 w-4" />
                     <span className="mono">{event?.akad_date ?? "21 Juni 2026"}</span>
+                    <span className="text-xs uppercase tracking-[0.3em]">Jakarta</span>
                   </div>
                   <TypewriterText
                     className="text-sm text-graphite max-w-xl"
                     text={invitation.opening_quote ?? "Dengan penuh rasa syukur kami mengundangmu untuk menjadi bagian dari hari bahagia kami."}
                   />
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="surface p-4 invite-card">
+                      <p className="text-xs uppercase tracking-[0.3em] text-graphite">Akad</p>
+                      <p className="text-sm font-semibold mt-2">{event?.akad_time ?? "09:00"}</p>
+                      <p className="text-xs text-graphite">{event?.akad_venue ?? "Gedung Serbaguna"}</p>
+                    </div>
+                    <div className="surface p-4 invite-card">
+                      <p className="text-xs uppercase tracking-[0.3em] text-graphite">Resepsi</p>
+                      <p className="text-sm font-semibold mt-2">{event?.reception_time ?? "19:00"}</p>
+                      <p className="text-xs text-graphite">{event?.reception_venue ?? "Ballroom Hotel"}</p>
+                    </div>
+                  </div>
                   {guestName ? (
                     <p className="text-sm bg-white px-4 py-2 rounded-full w-fit">Kepada Yth. {guestName}</p>
                   ) : null}
+                  <div className="flex items-center gap-3">
+                    <SparkleLink
+                      href="#rsvp"
+                      shimmer
+                      className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white hover-glow"
+                    >
+                      RSVP Sekarang
+                    </SparkleLink>
+                    <span className="text-xs text-graphite">Konfirmasi kehadiran H-3</span>
+                  </div>
                 </div>
-                <div className="surface p-4">
-                  <div className="h-64 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-                  <div className="mt-4 flex items-center justify-between text-xs text-graphite">
-                    <span>Save the date</span>
-                    <span className="mono">{event?.akad_date ?? "21 Juni 2026"}</span>
+                <div className="grid gap-4">
+                  <div className="surface p-4 invite-card">
+                    <div className="h-64 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                    <div className="mt-4 flex items-center justify-between text-xs text-graphite">
+                      <span>Save the date</span>
+                      <span className="mono">{event?.akad_date ?? "21 Juni 2026"}</span>
+                    </div>
+                  </div>
+                  <div className="surface p-4 invite-card">
+                    <p className="text-xs uppercase tracking-[0.3em] text-graphite">Quick Info</p>
+                    <div className="mt-3 flex items-center justify-between text-sm">
+                      <span>Dresscode</span>
+                      <span className="mono">Monochrome</span>
+                    </div>
+                    <div className="mt-2 flex items-center justify-between text-sm">
+                      <span>Hashtag</span>
+                      <span className="mono">#RaisaDimas</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -596,7 +635,7 @@ export default async function InvitePage({
                   <h1 className="text-4xl md:text-6xl font-semibold">
                     {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
                   </h1>
-                  <p className="text-sm text-graphite">Sunset ceremony • Acoustic • Warm lights</p>
+                  <p className="text-sm text-graphite">Sunset ceremony - Acoustic - Warm lights</p>
                   <TypewriterText
                     className="text-sm text-graphite max-w-xl"
                     text={invitation.opening_quote ?? "Kami merayakan cinta dengan nuansa hangat dan penuh ketulusan."}
@@ -620,7 +659,7 @@ export default async function InvitePage({
                   <h1 className="text-4xl md:text-6xl font-semibold mt-4">
                     {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
                   </h1>
-                  <p className="text-sm text-graphite mt-3">Greenhouse • Floral walk • Fresh air</p>
+                  <p className="text-sm text-graphite mt-3">Greenhouse - Floral walk - Fresh air</p>
                   <TypewriterText
                     className="text-sm text-graphite mt-4"
                     text={invitation.opening_quote ?? "Kami mengundangmu merayakan cinta di bawah rimbun pepohonan."}
