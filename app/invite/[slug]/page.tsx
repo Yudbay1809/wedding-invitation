@@ -248,7 +248,16 @@ export default async function InvitePage({
       <section className="max-w-4xl mx-auto px-6 py-12">
         <span className="pill pill-accent">Gallery</span>
         <h2 className="section-title mt-4">Momen Spesial</h2>
-        <GalleryLightbox images={gallery?.length ? gallery.map((item) => item.image_url) : fallbackGallery} />
+        <GalleryLightbox
+          images={gallery?.length ? gallery.map((item) => item.image_url) : fallbackGallery}
+          variant={
+            invitation.theme === "luxury"
+              ? "filmstrip"
+              : invitation.theme === "minimal" || invitation.theme === "modern"
+                ? "grid"
+                : "masonry"
+          }
+        />
       </section>
     </InviteSection>
   );
@@ -261,6 +270,14 @@ export default async function InvitePage({
           <p className="text-sm text-graphite mt-2">Klik peta untuk navigasi langsung.</p>
           <div className="mt-6">
             <MapReveal link={event.maps_link} />
+          </div>
+          <div className="mt-6">
+            <SparkleLink
+              href={event.maps_link}
+              className="inline-flex items-center justify-center rounded-full bg-ink px-5 py-2 text-xs font-semibold text-white"
+            >
+              Buka Google Maps
+            </SparkleLink>
           </div>
         </div>
       </section>
@@ -330,13 +347,123 @@ export default async function InvitePage({
     </InviteSection>
   );
 
-  const sections = invitation.theme === "minimal"
-    ? [eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]
+  const signatureSection = invitation.theme === "classic" ? (
+    <InviteSection>
+      <section className="max-w-4xl mx-auto px-6 py-12">
+        <div className="surface p-6">
+          <span className="pill pill-accent">Vows</span>
+          <h2 className="text-2xl font-semibold mt-4">Janji Suci</h2>
+          <TypewriterText
+            className="text-sm text-graphite mt-3"
+            text="Di hadapan keluarga dan sahabat, kami berjanji menjaga cinta ini dengan penuh ketulusan."
+          />
+        </div>
+      </section>
+    </InviteSection>
+  ) : invitation.theme === "romantic" ? (
+    <InviteSection>
+      <section className="max-w-4xl mx-auto px-6 py-12 text-center relative">
+        <FloatingOrnament className="absolute -top-14 -left-10 h-48 w-48 opacity-70" />
+        <FloatingOrnament className="absolute -bottom-16 -right-10 h-48 w-48 opacity-50" />
+        <div className="surface p-6">
+          <span className="pill pill-accent">Poem</span>
+          <h2 className="text-2xl font-semibold mt-4">Sajak Cinta</h2>
+          <p className="text-sm text-graphite mt-3">
+            Langit sore dan harum bunga, menemani langkah kami menuju janji setia.
+          </p>
+        </div>
+      </section>
+    </InviteSection>
+  ) : invitation.theme === "luxury" ? (
+    <InviteSection>
+      <section className="max-w-4xl mx-auto px-6 py-12">
+        <div className="surface p-6 text-center">
+          <span className="pill pill-accent">Dress Code</span>
+          <h2 className="text-2xl font-semibold mt-4">Elegant Gold</h2>
+          <p className="text-sm text-graphite mt-3">
+            Nuansa hitam, krem, dan sentuhan emas untuk melengkapi malam spesial.
+          </p>
+          <div className="lux-divider mt-6" />
+        </div>
+      </section>
+    </InviteSection>
+  ) : invitation.theme === "boho" ? (
+    <InviteSection>
+      <section className="max-w-4xl mx-auto px-6 py-12">
+        <div className="surface p-6">
+          <span className="pill pill-accent">Sunset Ritual</span>
+          <h2 className="text-2xl font-semibold mt-4">Golden Hour Ceremony</h2>
+          <p className="text-sm text-graphite mt-3">
+            Nuansa hangat, lampu gantung, dan musik akustik untuk suasana santai nan intim.
+          </p>
+        </div>
+      </section>
+    </InviteSection>
+  ) : invitation.theme === "garden" ? (
+    <InviteSection>
+      <section className="max-w-4xl mx-auto px-6 py-12">
+        <div className="surface p-6 grid md:grid-cols-2 gap-4">
+          <div>
+            <span className="pill pill-accent">Garden Walk</span>
+            <h2 className="text-2xl font-semibold mt-4">Aroma & Alam</h2>
+            <p className="text-sm text-graphite mt-3">
+              Bersiaplah untuk berjalan di bawah rimbun pepohonan dan harum bunga segar.
+            </p>
+          </div>
+          <div className="rounded-3xl bg-[#e6f4ec] p-5">
+            <h3 className="text-sm uppercase tracking-[0.3em] text-graphite">Venue</h3>
+            <p className="text-lg font-semibold mt-2">{event?.akad_venue ?? "Garden Hall"}</p>
+            <p className="text-sm text-graphite mt-2">{event?.akad_date ?? "21 Juni 2026"} · {event?.akad_time ?? "16:00"}</p>
+          </div>
+        </div>
+      </section>
+    </InviteSection>
+  ) : invitation.theme === "modern" ? (
+    <InviteSection>
+      <section className="max-w-4xl mx-auto px-6 py-12">
+        <div className="surface p-6">
+          <span className="pill pill-accent">Timeline</span>
+          <h2 className="text-2xl font-semibold mt-4">Flow Hari Bahagia</h2>
+          <div className="mt-4 grid md:grid-cols-3 gap-4 text-sm text-graphite">
+            <div className="rounded-2xl border border-black/10 p-4">
+              <p className="font-semibold text-ink">Akad</p>
+              <p className="mt-2">{event?.akad_time ?? "09:00"}</p>
+            </div>
+            <div className="rounded-2xl border border-black/10 p-4">
+              <p className="font-semibold text-ink">Resepsi</p>
+              <p className="mt-2">{event?.reception_time ?? "19:00"}</p>
+            </div>
+            <div className="rounded-2xl border border-black/10 p-4">
+              <p className="font-semibold text-ink">Afterparty</p>
+              <p className="mt-2">21:00</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </InviteSection>
+  ) : invitation.theme === "celestial" ? (
+    <InviteSection>
+      <section className="max-w-4xl mx-auto px-6 py-12">
+        <div className="surface p-6 relative overflow-hidden">
+          <div className="starfield" />
+          <h2 className="text-2xl font-semibold">Night Under The Stars</h2>
+          <p className="text-sm text-graphite mt-3">
+            Seperti rasi bintang yang selaras, kisah kami mengajakmu menyaksikan malam penuh cahaya.
+          </p>
+        </div>
+      </section>
+    </InviteSection>
+  ) : null;
+
+  const sections = (invitation.theme === "minimal"
+    ? [signatureSection, eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]
     : invitation.theme === "romantic"
-      ? [storySection, eventSection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]
+      ? [signatureSection, storySection, eventSection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]
       : invitation.theme === "luxury"
-        ? [eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]
-        : [eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection];
+        ? [signatureSection, eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]
+        : invitation.theme === "modern"
+          ? [signatureSection, gallerySection, eventSection, storySection, mapSection, rsvpSection, giftSection, closingSection]
+          : [signatureSection, eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]).filter(Boolean) as JSX.Element[];
 
   return (
     <main className={`bg-sand text-ink ${themeClass}`}>
@@ -346,7 +473,7 @@ export default async function InvitePage({
       />
       <InviteSection>
         <FadeParallax>
-          <section className={`min-h-screen px-6 py-16 gradient-hero ${layout.heroAlign} relative overflow-hidden`}>
+          <section className={`min-h-screen px-6 py-16 invite-hero ${layout.heroAlign}`}>
             {invitation.theme === "romantic" ? (
               <>
                 <FloatingOrnament className="absolute -top-24 -left-24 h-64 w-64 opacity-70" />
@@ -354,8 +481,23 @@ export default async function InvitePage({
                 <FloralParallaxLayer />
               </>
             ) : null}
+            {invitation.theme === "modern" ? <div className="hero-grid" /> : null}
+            {invitation.theme === "celestial" ? (
+              <>
+                <div className="starfield" />
+                <div className="celestial-glow" style={{ top: "12%", left: "8%" }} />
+                <div className="celestial-glow" style={{ bottom: "10%", right: "12%" }} />
+              </>
+            ) : null}
+            {(invitation.theme === "boho" || invitation.theme === "garden" || invitation.theme === "classic") ? (
+              <>
+                <div className="hero-orb slow" style={{ top: "8%", right: "12%", width: "140px", height: "140px", background: "rgba(255, 255, 255, 0.7)" }} />
+                <div className="hero-orb delay" style={{ bottom: "12%", left: "10%", width: "180px", height: "180px", background: "rgba(255, 255, 255, 0.5)" }} />
+              </>
+            ) : null}
+
             {invitation.theme === "minimal" ? (
-              <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.2fr_1fr] gap-8 items-center">
+              <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.2fr_1fr] gap-8 items-center relative z-10">
                 <div className="flex flex-col gap-4">
                   <span className="pill pill-accent">The Wedding of</span>
                   <h1 className="text-4xl md:text-6xl font-semibold">
@@ -382,31 +524,114 @@ export default async function InvitePage({
                 </div>
               </div>
             ) : invitation.theme === "luxury" ? (
-              <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-4">
+              <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-4 text-white relative z-10">
                 <span className="pill pill-accent">The Wedding of</span>
                 <h1 className="text-4xl md:text-6xl font-semibold">
                   {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
                 </h1>
                 <div className="lux-divider w-40" />
-                <div className="flex items-center gap-3 text-sm text-graphite">
+                <div className="flex items-center gap-3 text-sm text-white/70">
                   <Heart className="h-4 w-4" />
                   <span>{event?.akad_date ?? "21 Juni 2026"}</span>
                 </div>
                 <TypewriterText
-                  className="text-sm text-graphite max-w-xl"
+                  className="text-sm text-white/70 max-w-xl"
                   text={invitation.opening_quote ?? "Dengan penuh rasa syukur kami mengundangmu untuk menjadi bagian dari hari bahagia kami."}
                 />
                 {guestName ? (
-                  <p className="text-sm bg-white px-4 py-2 rounded-full">Kepada Yth. {guestName}</p>
+                  <p className="text-sm bg-white/10 px-4 py-2 rounded-full">Kepada Yth. {guestName}</p>
                 ) : null}
                 {invitation?.cover_image_url ? (
                   <Parallax strength={30}>
-                    <div className="mt-6 h-64 w-full max-w-xl rounded-3xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${invitation.cover_image_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                    <div className="mt-6 h-64 w-full max-w-xl rounded-3xl bg-[#111827]" style={{ backgroundImage: `url(${invitation.cover_image_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                  </Parallax>
+                ) : null}
+              </div>
+            ) : invitation.theme === "boho" ? (
+              <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.1fr_1fr] gap-8 items-center relative z-10">
+                <div className="flex flex-col gap-4">
+                  <span className="pill pill-accent">Boho Celebration</span>
+                  <h1 className="text-4xl md:text-6xl font-semibold">
+                    {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
+                  </h1>
+                  <p className="text-sm text-graphite">Sunset ceremony • Acoustic • Warm lights</p>
+                  <TypewriterText
+                    className="text-sm text-graphite max-w-xl"
+                    text={invitation.opening_quote ?? "Kami merayakan cinta dengan nuansa hangat dan penuh ketulusan."}
+                  />
+                  <SparkleLink href="#rsvp" className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white w-fit">
+                    RSVP
+                  </SparkleLink>
+                </div>
+                <div className="surface p-4 rotate-1">
+                  <div className="h-64 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: invitation?.cover_image_url ? `url(${invitation.cover_image_url})` : undefined, backgroundSize: "cover", backgroundPosition: "center" }} />
+                </div>
+              </div>
+            ) : invitation.theme === "garden" ? (
+              <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.1fr] gap-8 items-center relative z-10">
+                <div className="surface p-6">
+                  <span className="pill pill-accent">Garden Party</span>
+                  <h1 className="text-4xl md:text-6xl font-semibold mt-4">
+                    {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
+                  </h1>
+                  <p className="text-sm text-graphite mt-3">Greenhouse • Floral walk • Fresh air</p>
+                  <TypewriterText
+                    className="text-sm text-graphite mt-4"
+                    text={invitation.opening_quote ?? "Kami mengundangmu merayakan cinta di bawah rimbun pepohonan."}
+                  />
+                </div>
+                <div className="rounded-3xl bg-white/80 p-5 shadow-lift">
+                  <div className="h-56 rounded-2xl bg-[#e6f4ec]" style={{ backgroundImage: invitation?.cover_image_url ? `url(${invitation.cover_image_url})` : undefined, backgroundSize: "cover", backgroundPosition: "center" }} />
+                  <div className="mt-4 flex items-center justify-between text-xs text-graphite">
+                    <span>Garden Ceremony</span>
+                    <span>{event?.akad_date ?? "21 Juni 2026"}</span>
+                  </div>
+                </div>
+              </div>
+            ) : invitation.theme === "modern" ? (
+              <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.2fr_1fr] gap-8 items-center relative z-10">
+                <div className="flex flex-col gap-4">
+                  <span className="pill pill-accent">Modern Union</span>
+                  <h1 className="text-4xl md:text-6xl font-semibold">
+                    {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
+                  </h1>
+                  <div className="text-sm text-graphite flex items-center gap-3">
+                    <Heart className="h-4 w-4" />
+                    <span>{event?.akad_date ?? "21 Juni 2026"}</span>
+                  </div>
+                  <TypewriterText
+                    className="text-sm text-graphite"
+                    text={invitation.opening_quote ?? "Merayakan cinta dengan gaya modern dan penuh energi."}
+                  />
+                </div>
+                <div className="surface p-6">
+                  <h3 className="text-lg font-semibold">Highlight</h3>
+                  <ul className="mt-4 space-y-2 text-sm text-graphite">
+                    <li>• Live jazz set</li>
+                    <li>• City skyline view</li>
+                    <li>• Afterparty lounge</li>
+                  </ul>
+                </div>
+              </div>
+            ) : invitation.theme === "celestial" ? (
+              <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-4 relative z-10">
+                <span className="pill pill-accent">Celestial Night</span>
+                <h1 className="text-4xl md:text-6xl font-semibold">
+                  {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
+                </h1>
+                <p className="text-sm text-graphite">Under the stars · Midnight vows</p>
+                <TypewriterText
+                  className="text-sm text-graphite max-w-xl"
+                  text={invitation.opening_quote ?? "Seperti bintang yang berpadu, kami mengundangmu merayakan malam penuh cahaya."}
+                />
+                {invitation?.cover_image_url ? (
+                  <Parallax strength={20}>
+                    <div className="mt-6 h-60 w-full max-w-2xl rounded-3xl bg-[#ede9fe]" style={{ backgroundImage: `url(${invitation.cover_image_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                   </Parallax>
                 ) : null}
               </div>
             ) : (
-              <div className={`flex flex-col justify-center ${layout.heroAlign}`}>
+              <div className={`flex flex-col justify-center ${layout.heroAlign} relative z-10`}>
                 <span className="pill pill-accent">The Wedding of</span>
                 <h1 className="text-4xl md:text-6xl font-semibold mt-6">
                   {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}

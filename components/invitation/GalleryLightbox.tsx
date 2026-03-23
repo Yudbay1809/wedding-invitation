@@ -3,7 +3,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
-export function GalleryLightbox({ images }: { images: string[] }) {
+export function GalleryLightbox({
+  images,
+  variant = "masonry"
+}: {
+  images: string[];
+  variant?: "masonry" | "grid" | "filmstrip";
+}) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const active = activeIndex !== null ? images[activeIndex] : null;
@@ -68,14 +74,35 @@ export function GalleryLightbox({ images }: { images: string[] }) {
           </div>
         </div>
       ) : null}
-      <div className="columns-2 md:columns-3 gap-4 mt-6">
+      <div
+        className={
+          variant === "filmstrip"
+            ? "gallery-filmstrip mt-6"
+            : variant === "grid"
+              ? "gallery-grid mt-6"
+              : "columns-2 md:columns-3 gap-4 mt-6"
+        }
+      >
         {images.map((src, index) => (
           <button
             key={index}
             onClick={() => setActiveIndex(index)}
-            className="mb-4 break-inside-avoid rounded-2xl overflow-hidden hover:opacity-90 transition"
+            className={
+              variant === "filmstrip"
+                ? "gallery-filmstrip-item"
+                : "mb-4 break-inside-avoid rounded-2xl overflow-hidden hover:opacity-90 transition"
+            }
           >
-            <div className="h-40 md:h-56 bg-[#f3f4f6]" style={{ backgroundImage: `url(${src})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+            <div
+              className={
+                variant === "filmstrip"
+                  ? "h-48 w-72 md:h-56 md:w-80"
+                  : variant === "grid"
+                    ? "h-40 md:h-52"
+                    : "h-40 md:h-56"
+              }
+              style={{ backgroundImage: `url(${src})`, backgroundSize: "cover", backgroundPosition: "center" }}
+            />
           </button>
         ))}
       </div>
