@@ -11,6 +11,7 @@ import { CalendarDays, MapPin, Heart, Sparkles } from "lucide-react";
 import { Parallax } from "@/components/invitation/Parallax";
 import { InviteSection, InviteStagger, InviteStaggerItem } from "@/components/invitation/InviteMotion";
 import { Countdown } from "@/components/invitation/Countdown";
+import { CountdownMini } from "@/components/invitation/CountdownMini";
 import { MusicPlayer } from "@/components/invitation/MusicPlayer";
 import { FloatingOrnament } from "@/components/invitation/FloatingOrnament";
 import { FloralParallaxLayer } from "@/components/invitation/FloralParallaxLayer";
@@ -156,6 +157,7 @@ export default async function InvitePage({
   const themeClass = themeClassMap[invitation.theme] ?? "theme-classic";
   const layout = themeLayout[invitation.theme as keyof typeof themeLayout] ?? themeLayout.classic;
   const coverImage = invitation?.cover_image_url ?? "/assets/wedding-4.jpg";
+  const heroGallery = (gallery?.length ? gallery.map((item) => item.image_url) : fallbackGallery).slice(0, 4);
 
   const eventCards = (
     <InviteStagger>
@@ -582,8 +584,14 @@ export default async function InvitePage({
                     </SparkleLink>
                     <span className="text-xs text-graphite">Konfirmasi kehadiran H-3</span>
                   </div>
+                  <div className="surface p-4 invite-card">
+                    <p className="text-xs uppercase tracking-[0.3em] text-graphite">Countdown</p>
+                    <div className="mt-3">
+                      <CountdownMini date={event?.akad_date ?? event?.reception_date ?? null} />
+                    </div>
+                  </div>
                 </div>
-                <div className="grid gap-4">
+                <div className="grid gap-4 relative">
                   <div className="surface p-4 invite-card">
                     <div className="h-64 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                     <div className="mt-4 flex items-center justify-between text-xs text-graphite">
@@ -602,6 +610,29 @@ export default async function InvitePage({
                       <span className="mono">#RaisaDimas</span>
                     </div>
                   </div>
+                  <div className="surface p-4 invite-card">
+                    <p className="text-xs uppercase tracking-[0.3em] text-graphite">Gallery Preview</p>
+                    <div className="mt-3 flex gap-2">
+                      {heroGallery.map((image, index) => (
+                        <div
+                          key={index}
+                          className="h-16 w-16 rounded-2xl hero-thumb"
+                          style={{ backgroundImage: `url(${image})`, backgroundSize: "cover", backgroundPosition: "center" }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="floating-badge floating-date">
+                    <span className="text-xs uppercase tracking-[0.3em]">Tanggal</span>
+                    <span className="text-sm font-semibold">{event?.akad_date ?? "21 Juni 2026"}</span>
+                  </div>
+                  <SparkleLink
+                    href="#rsvp"
+                    shimmer
+                    className="floating-badge floating-rsvp inline-flex items-center justify-center rounded-full bg-ink px-4 py-2 text-xs font-semibold text-white hover-glow"
+                  >
+                    RSVP
+                  </SparkleLink>
                 </div>
               </div>
             ) : invitation.theme === "luxury" ? (
