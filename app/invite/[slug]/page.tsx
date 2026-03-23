@@ -278,7 +278,8 @@ export default async function InvitePage({
           <div className="mt-6">
             <SparkleLink
               href={event.maps_link}
-              className="inline-flex items-center justify-center rounded-full bg-ink px-5 py-2 text-xs font-semibold text-white"
+              shimmer
+              className="inline-flex items-center justify-center rounded-full bg-ink px-5 py-2 text-xs font-semibold text-white hover-glow"
             >
               Buka Google Maps
             </SparkleLink>
@@ -485,6 +486,11 @@ export default async function InvitePage({
                 <FloatingOrnament className="absolute -top-24 -left-24 h-64 w-64 opacity-70" />
                 <FloatingOrnament className="absolute -bottom-24 -right-24 h-64 w-64 opacity-50" />
                 <FloralParallaxLayer />
+                <div className="petal-layer">
+                  <span className="petal" style={{ left: "12%", top: "-5%" }} />
+                  <span className="petal petal-2" style={{ left: "48%", top: "-10%" }} />
+                  <span className="petal petal-3" style={{ left: "78%", top: "-6%" }} />
+                </div>
               </>
             ) : null}
             {invitation.theme === "modern" ? <div className="hero-grid" /> : null}
@@ -494,6 +500,8 @@ export default async function InvitePage({
                 <div className="starfield" />
                 <div className="celestial-glow" style={{ top: "12%", left: "8%" }} />
                 <div className="celestial-glow" style={{ bottom: "10%", right: "12%" }} />
+                <span className="shooting-star delay" />
+                <span className="shooting-star fast" />
               </>
             ) : null}
             {(invitation.theme === "boho" || invitation.theme === "garden" || invitation.theme === "classic") ? (
@@ -566,7 +574,11 @@ export default async function InvitePage({
                     className="text-sm text-graphite max-w-xl"
                     text={invitation.opening_quote ?? "Kami merayakan cinta dengan nuansa hangat dan penuh ketulusan."}
                   />
-                  <SparkleLink href="#rsvp" className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white w-fit">
+                  <SparkleLink
+                    href="#rsvp"
+                    shimmer
+                    className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white w-fit hover-glow"
+                  >
                     RSVP
                   </SparkleLink>
                 </div>
@@ -678,7 +690,11 @@ export default async function InvitePage({
               <h3 className="text-lg font-semibold">Konfirmasi Kehadiran</h3>
               <p className="text-sm text-graphite">Kami akan sangat senang jika kamu dapat hadir dan merayakan hari bahagia bersama.</p>
             </div>
-            <SparkleLink href="#rsvp" className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white">
+            <SparkleLink
+              href="#rsvp"
+              shimmer
+              className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white hover-glow"
+            >
               Isi RSVP
             </SparkleLink>
           </div>
@@ -695,7 +711,8 @@ export default async function InvitePage({
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 md:hidden">
           <SparkleLink
             href="#rsvp"
-            className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white shadow-lift"
+            shimmer
+            className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white shadow-lift hover-glow"
           >
             RSVP Sekarang
           </SparkleLink>

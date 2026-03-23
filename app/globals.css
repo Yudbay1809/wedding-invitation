@@ -380,6 +380,78 @@ h1, h2, h3, h4 {
   justify-content: center;
 }
 
+.cta-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-shimmer-layer {
+  position: absolute;
+  inset: 0;
+  transform: translateX(-120%);
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: shimmer 2.8s ease-in-out infinite;
+}
+
+.hover-glow {
+  box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 16px 40px rgba(255, 107, 107, 0.25);
+  transform: translateY(-2px);
+}
+
+.petal-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.petal {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px 999px 999px 0;
+  background: rgba(255, 182, 193, 0.65);
+  filter: blur(0.2px);
+  animation: petal-drift 12s linear infinite;
+}
+
+.petal.petal-2 {
+  animation-duration: 14s;
+  opacity: 0.55;
+}
+
+.petal.petal-3 {
+  animation-duration: 16s;
+  opacity: 0.45;
+}
+
+.shooting-star {
+  position: absolute;
+  width: 180px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), transparent);
+  opacity: 0.7;
+  transform: rotate(-20deg);
+  animation: shooting 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.shooting-star.delay {
+  animation-delay: 2.5s;
+  top: 20%;
+  left: -10%;
+}
+
+.shooting-star.fast {
+  animation-duration: 4.5s;
+  top: 60%;
+  left: -20%;
+}
+
 .typewriter {
   min-height: 20px;
 }
@@ -535,6 +607,24 @@ h1, h2, h3, h4 {
 @keyframes twinkle {
   0%, 100% { opacity: 0.4; }
   50% { opacity: 0.9; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-120%); }
+  60% { transform: translateX(120%); }
+  100% { transform: translateX(120%); }
+}
+
+@keyframes petal-drift {
+  0% { transform: translate3d(0, -20px, 0) rotate(0deg); }
+  100% { transform: translate3d(0, 520px, 0) rotate(140deg); }
+}
+
+@keyframes shooting {
+  0% { transform: translate3d(-120px, -60px, 0) rotate(-20deg); opacity: 0; }
+  15% { opacity: 1; }
+  35% { opacity: 0; }
+  100% { transform: translate3d(520px, 260px, 0) rotate(-20deg); opacity: 0; }
 }
 
 @keyframes blink {

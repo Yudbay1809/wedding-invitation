@@ -11,21 +11,24 @@ const particles = Array.from({ length: 10 }).map((_, index) => ({
 export function SparkleLink({
   href,
   className,
-  children
+  children,
+  shimmer = false
 }: {
   href: string;
   className?: string;
   children: React.ReactNode;
+  shimmer?: boolean;
 }) {
   const [burstId, setBurstId] = useState(0);
 
   return (
     <a
       href={href}
-      className={clsx("relative overflow-visible", className)}
+      className={clsx("relative overflow-visible", shimmer ? "cta-shimmer" : null, className)}
       onClick={() => setBurstId((value) => value + 1)}
     >
       {children}
+      {shimmer ? <span className="cta-shimmer-layer" aria-hidden="true" /> : null}
       <span key={burstId} className="sparkle-burst">
         {particles.map((particle, index) => (
           <span
