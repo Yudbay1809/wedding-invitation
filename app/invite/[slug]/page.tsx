@@ -78,7 +78,13 @@ const themeLayout = {
 const fallbackGallery = [
   "/assets/gallery-1.jpg",
   "/assets/gallery-2.jpg",
-  "/assets/gallery-3.jpg"
+  "/assets/gallery-3.jpg",
+  "/assets/hero-photo.jpg"
+];
+
+const fallbackCouplePhotos = [
+  "/assets/gallery-1.jpg",
+  "/assets/gallery-2.jpg"
 ];
 
 export default async function InvitePage({
@@ -149,6 +155,7 @@ export default async function InvitePage({
 
   const themeClass = themeClassMap[invitation.theme] ?? "theme-classic";
   const layout = themeLayout[invitation.theme as keyof typeof themeLayout] ?? themeLayout.classic;
+  const coverImage = invitation?.cover_image_url ?? "/assets/hero-photo.jpg";
 
   const eventCards = (
     <InviteStagger>
@@ -156,7 +163,7 @@ export default async function InvitePage({
         {[{ label: "Akad", date: event?.akad_date, time: event?.akad_time, venue: event?.akad_venue },
           { label: "Resepsi", date: event?.reception_date, time: event?.reception_time, venue: event?.reception_venue }].map((item) => (
           <InviteStaggerItem key={item.label}>
-            <div className={layout.card}>
+            <div className={`${layout.card} invite-card`}>
               <div className="flex items-center gap-3">
                 <CalendarDays className="h-5 w-5 text-graphite" />
                 <h3 className="text-lg font-semibold">{item.label}</h3>
@@ -183,9 +190,9 @@ export default async function InvitePage({
     <section className="max-w-5xl mx-auto px-6 py-12">
       <div className="grid lg:grid-cols-[1.2fr_1fr] gap-8 items-center">
         <div className="rounded-3xl h-72 bg-[#111827] relative overflow-hidden">
-          {invitation?.cover_image_url ? (
+          {coverImage ? (
             <Parallax strength={50}>
-              <div className="absolute inset-0" style={{ backgroundImage: `url(${invitation.cover_image_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+              <div className="absolute inset-0" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
             </Parallax>
           ) : null}
           <div className="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/20 to-transparent" />
@@ -226,14 +233,28 @@ export default async function InvitePage({
       <section className="max-w-4xl mx-auto px-6 py-12">
         <span className="pill pill-accent">Our Story</span>
         <h2 className="section-title mt-4">Kisah Kami</h2>
-        {(couple?.bride_photo_url || couple?.groom_photo_url) ? (
+        {(couple?.bride_photo_url || couple?.groom_photo_url || fallbackCouplePhotos.length) ? (
           <div className="mt-6 grid md:grid-cols-2 gap-4">
             <div className="surface p-4">
-              <div className="h-56 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: couple?.bride_photo_url ? `url(${couple.bride_photo_url})` : undefined, backgroundSize: "cover", backgroundPosition: "center" }} />
+              <div
+                className="h-56 rounded-2xl bg-[#f3f4f6]"
+                style={{
+                  backgroundImage: `url(${couple?.bride_photo_url ?? fallbackCouplePhotos[0]})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}
+              />
               <p className="mt-3 text-sm text-graphite">{couple?.bride_name ?? "Bride"}</p>
             </div>
             <div className="surface p-4">
-              <div className="h-56 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: couple?.groom_photo_url ? `url(${couple.groom_photo_url})` : undefined, backgroundSize: "cover", backgroundPosition: "center" }} />
+              <div
+                className="h-56 rounded-2xl bg-[#f3f4f6]"
+                style={{
+                  backgroundImage: `url(${couple?.groom_photo_url ?? fallbackCouplePhotos[1]})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}
+              />
               <p className="mt-3 text-sm text-graphite">{couple?.groom_name ?? "Groom"}</p>
             </div>
           </div>
@@ -269,7 +290,7 @@ export default async function InvitePage({
   const mapSection = event?.maps_link ? (
     <InviteSection>
       <section className="max-w-4xl mx-auto px-6 py-12">
-        <div className={layout.card}>
+        <div className={`${layout.card} invite-card`}>
           <h2 className="text-xl font-semibold">Lokasi Acara</h2>
           <p className="text-sm text-graphite mt-2">Klik peta untuk navigasi langsung.</p>
           <div className="mt-6">
@@ -293,7 +314,7 @@ export default async function InvitePage({
     <InviteSection>
       <section id="rsvp" className="max-w-4xl mx-auto px-6 py-12 grid gap-6">
         {invitation?.enable_rsvp ? (
-          <div className={layout.card}>
+          <div className={`${layout.card} invite-card`}>
             <h2 className="text-xl font-semibold">RSVP</h2>
             <div className="grid lg:grid-cols-[1.2fr_1fr] gap-6">
               <RSVPForm
@@ -303,7 +324,7 @@ export default async function InvitePage({
                 hideName={Boolean(guestTokenResolved)}
                 guestToken={guestTokenResolved || undefined}
               />
-              <div className="surface p-6">
+              <div className="surface p-6 invite-card">
                 <h3 className="text-lg font-semibold">Tips RSVP</h3>
                 <ul className="mt-3 space-y-2 text-sm text-graphite">
                   <li>Konfirmasi sebelum H-3 acara.</li>
@@ -314,7 +335,7 @@ export default async function InvitePage({
             </div>
           </div>
         ) : null}
-        <div className={layout.card}>
+        <div className={`${layout.card} invite-card`}>
           <h2 className="text-xl font-semibold">Ucapan</h2>
           <GuestMessageForm action={submitGuestMessageWithFeedback.bind(null, invitation?.id ?? "")} />
         </div>
@@ -325,14 +346,16 @@ export default async function InvitePage({
   const giftSection = gift ? (
     <InviteSection>
       <section className="max-w-4xl mx-auto px-6 py-12">
-        <GiftCard
-          bankName={gift?.bank_name}
-          accountNumber={gift?.account_number}
-          accountHolder={gift?.account_holder}
-          walletName={gift?.wallet_name}
-          walletNumber={gift?.wallet_number}
-        />
-        <div className="surface p-6 mt-6">
+        <div className="invite-card">
+          <GiftCard
+            bankName={gift?.bank_name}
+            accountNumber={gift?.account_number}
+            accountHolder={gift?.account_holder}
+            walletName={gift?.wallet_name}
+            walletNumber={gift?.wallet_number}
+          />
+        </div>
+        <div className="surface p-6 mt-6 invite-card">
           <h3 className="text-lg font-semibold">Konfirmasi Amplop</h3>
           <GiftConfirmForm action={confirmGiftWithFeedback.bind(null, invitation?.id ?? "")} />
         </div>
@@ -355,7 +378,7 @@ export default async function InvitePage({
   const signatureSection = invitation.theme === "classic" ? (
     <InviteSection>
       <section className="max-w-4xl mx-auto px-6 py-12">
-        <div className="surface p-6">
+        <div className="surface p-6 invite-card">
           <span className="pill pill-accent">Vows</span>
           <h2 className="text-2xl font-semibold mt-4">Janji Suci</h2>
           <TypewriterText
@@ -370,7 +393,7 @@ export default async function InvitePage({
       <section className="max-w-4xl mx-auto px-6 py-12 text-center relative">
         <FloatingOrnament className="absolute -top-14 -left-10 h-48 w-48 opacity-70" />
         <FloatingOrnament className="absolute -bottom-16 -right-10 h-48 w-48 opacity-50" />
-        <div className="surface p-6">
+        <div className="surface p-6 invite-card">
           <span className="pill pill-accent">Poem</span>
           <h2 className="text-2xl font-semibold mt-4">Sajak Cinta</h2>
           <p className="text-sm text-graphite mt-3">
@@ -382,7 +405,7 @@ export default async function InvitePage({
   ) : invitation.theme === "luxury" ? (
     <InviteSection>
       <section className="max-w-4xl mx-auto px-6 py-12">
-        <div className="surface p-6 text-center">
+        <div className="surface p-6 text-center invite-card">
           <span className="pill pill-accent">Dress Code</span>
           <h2 className="text-2xl font-semibold mt-4">Elegant Gold</h2>
           <p className="text-sm text-graphite mt-3">
@@ -395,7 +418,7 @@ export default async function InvitePage({
   ) : invitation.theme === "boho" ? (
     <InviteSection>
       <section className="max-w-4xl mx-auto px-6 py-12">
-        <div className="surface p-6">
+        <div className="surface p-6 invite-card">
           <span className="pill pill-accent">Sunset Ritual</span>
           <h2 className="text-2xl font-semibold mt-4">Golden Hour Ceremony</h2>
           <p className="text-sm text-graphite mt-3">
@@ -407,7 +430,7 @@ export default async function InvitePage({
   ) : invitation.theme === "garden" ? (
     <InviteSection>
       <section className="max-w-4xl mx-auto px-6 py-12">
-        <div className="surface p-6 grid md:grid-cols-2 gap-4">
+        <div className="surface p-6 grid md:grid-cols-2 gap-4 invite-card">
           <div>
             <span className="pill pill-accent">Garden Walk</span>
             <h2 className="text-2xl font-semibold mt-4">Aroma & Alam</h2>
@@ -426,7 +449,7 @@ export default async function InvitePage({
   ) : invitation.theme === "modern" ? (
     <InviteSection>
       <section className="max-w-4xl mx-auto px-6 py-12">
-        <div className="surface p-6">
+        <div className="surface p-6 invite-card">
           <span className="pill pill-accent">Timeline</span>
           <h2 className="text-2xl font-semibold mt-4">Flow Hari Bahagia</h2>
           <div className="mt-4 grid md:grid-cols-3 gap-4 text-sm text-graphite">
@@ -449,7 +472,7 @@ export default async function InvitePage({
   ) : invitation.theme === "celestial" ? (
     <InviteSection>
       <section className="max-w-4xl mx-auto px-6 py-12">
-        <div className="surface p-6 relative overflow-hidden">
+        <div className="surface p-6 relative overflow-hidden invite-card">
           <div className="starfield" />
           <h2 className="text-2xl font-semibold">Night Under The Stars</h2>
           <p className="text-sm text-graphite mt-3">
@@ -531,7 +554,7 @@ export default async function InvitePage({
                   ) : null}
                 </div>
                 <div className="surface p-4">
-                  <div className="h-64 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: invitation?.cover_image_url ? `url(${invitation.cover_image_url})` : undefined, backgroundSize: "cover", backgroundPosition: "center" }} />
+                  <div className="h-64 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                   <div className="mt-4 flex items-center justify-between text-xs text-graphite">
                     <span>Save the date</span>
                     <span className="mono">{event?.akad_date ?? "21 Juni 2026"}</span>
@@ -556,9 +579,9 @@ export default async function InvitePage({
                 {guestName ? (
                   <p className="text-sm bg-white/10 px-4 py-2 rounded-full">Kepada Yth. {guestName}</p>
                 ) : null}
-                {invitation?.cover_image_url ? (
+                {coverImage ? (
                   <Parallax strength={30}>
-                    <div className="mt-6 h-64 w-full max-w-xl rounded-3xl bg-[#111827]" style={{ backgroundImage: `url(${invitation.cover_image_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                    <div className="mt-6 h-64 w-full max-w-xl rounded-3xl bg-[#111827]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                   </Parallax>
                 ) : null}
               </div>
@@ -583,12 +606,12 @@ export default async function InvitePage({
                   </SparkleLink>
                 </div>
                 <div className="surface p-4 rotate-1">
-                  <div className="h-64 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: invitation?.cover_image_url ? `url(${invitation.cover_image_url})` : undefined, backgroundSize: "cover", backgroundPosition: "center" }} />
+                  <div className="h-64 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                 </div>
               </div>
             ) : invitation.theme === "garden" ? (
               <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.1fr] gap-8 items-center relative z-10">
-                <div className="surface p-6">
+                <div className="surface p-6 invite-card">
                   <span className="pill pill-accent">Garden Party</span>
                   <h1 className="text-4xl md:text-6xl font-semibold mt-4">
                     {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
@@ -600,7 +623,7 @@ export default async function InvitePage({
                   />
                 </div>
                 <div className="rounded-3xl bg-white/80 p-5 shadow-lift">
-                  <div className="h-56 rounded-2xl bg-[#e6f4ec]" style={{ backgroundImage: invitation?.cover_image_url ? `url(${invitation.cover_image_url})` : undefined, backgroundSize: "cover", backgroundPosition: "center" }} />
+                  <div className="h-56 rounded-2xl bg-[#e6f4ec]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                   <div className="mt-4 flex items-center justify-between text-xs text-graphite">
                     <span>Garden Ceremony</span>
                     <span>{event?.akad_date ?? "21 Juni 2026"}</span>
@@ -623,7 +646,7 @@ export default async function InvitePage({
                     text={invitation.opening_quote ?? "Merayakan cinta dengan gaya modern dan penuh energi."}
                   />
                 </div>
-                <div className="surface p-6">
+                <div className="surface p-6 invite-card">
                   <h3 className="text-lg font-semibold">Highlight</h3>
                   <ul className="mt-4 space-y-2 text-sm text-graphite">
                     <li>• Live jazz set</li>
@@ -643,9 +666,9 @@ export default async function InvitePage({
                   className="text-sm text-graphite max-w-xl"
                   text={invitation.opening_quote ?? "Seperti bintang yang berpadu, kami mengundangmu merayakan malam penuh cahaya."}
                 />
-                {invitation?.cover_image_url ? (
+                {coverImage ? (
                   <Parallax strength={20}>
-                    <div className="mt-6 h-60 w-full max-w-2xl rounded-3xl bg-[#ede9fe]" style={{ backgroundImage: `url(${invitation.cover_image_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                    <div className="mt-6 h-60 w-full max-w-2xl rounded-3xl bg-[#ede9fe]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                   </Parallax>
                 ) : null}
               </div>
@@ -666,9 +689,9 @@ export default async function InvitePage({
                 {guestName ? (
                   <p className="mt-6 text-sm bg-white px-4 py-2 rounded-full">Kepada Yth. {guestName}</p>
                 ) : null}
-                {invitation?.cover_image_url ? (
+                {coverImage ? (
                   <Parallax strength={30}>
-                    <div className="mt-8 h-60 w-full max-w-xl rounded-3xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${invitation.cover_image_url})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                    <div className="mt-8 h-60 w-full max-w-xl rounded-3xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                   </Parallax>
                 ) : null}
               </div>
@@ -685,7 +708,7 @@ export default async function InvitePage({
 
       <InviteSection>
         <section className="max-w-4xl mx-auto px-6 py-8">
-          <div className="surface p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="surface p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 invite-card">
             <div>
               <h3 className="text-lg font-semibold">Konfirmasi Kehadiran</h3>
               <p className="text-sm text-graphite">Kami akan sangat senang jika kamu dapat hadir dan merayakan hari bahagia bersama.</p>
