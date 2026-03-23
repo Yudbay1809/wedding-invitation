@@ -462,6 +462,18 @@ h1, h2, h3, h4 {
   opacity: 0.45;
 }
 
+.petal.petal-4 {
+  animation-duration: 18s;
+  opacity: 0.35;
+  transform: scale(0.8);
+}
+
+.petal.petal-5 {
+  animation-duration: 20s;
+  opacity: 0.4;
+  transform: scale(0.9);
+}
+
 .shooting-star {
   position: absolute;
   width: 180px;
@@ -483,6 +495,20 @@ h1, h2, h3, h4 {
   animation-duration: 4.5s;
   top: 60%;
   left: -20%;
+}
+
+.shooting-star.late {
+  animation-delay: 4s;
+  animation-duration: 7s;
+  top: 35%;
+  left: -25%;
+}
+
+.shooting-star.small {
+  width: 120px;
+  animation-duration: 5.5s;
+  top: 75%;
+  left: -15%;
 }
 
 .typewriter {
@@ -630,6 +656,23 @@ h1, h2, h3, h4 {
 
 .gallery-filmstrip-item:hover {
   transform: translateY(-4px);
+}
+
+.gallery-filmstrip-item:hover,
+.gallery-carousel-item:hover {
+  box-shadow: 0 24px 44px rgba(0, 0, 0, 0.18);
+}
+
+.theme-romantic .gallery-polaroid-item:hover {
+  box-shadow: 0 26px 46px rgba(255, 107, 107, 0.22);
+}
+
+.theme-celestial .gallery-carousel-item:hover {
+  box-shadow: 0 26px 46px rgba(99, 102, 241, 0.26);
+}
+
+.theme-luxury .gallery-filmstrip-item:hover {
+  box-shadow: 0 28px 50px rgba(245, 158, 11, 0.25);
 }
 
 @keyframes float {

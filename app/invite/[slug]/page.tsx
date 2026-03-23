@@ -513,6 +513,8 @@ export default async function InvitePage({
                   <span className="petal" style={{ left: "12%", top: "-5%" }} />
                   <span className="petal petal-2" style={{ left: "48%", top: "-10%" }} />
                   <span className="petal petal-3" style={{ left: "78%", top: "-6%" }} />
+                  <span className="petal petal-4" style={{ left: "30%", top: "-12%" }} />
+                  <span className="petal petal-5" style={{ left: "62%", top: "-8%" }} />
                 </div>
               </>
             ) : null}
@@ -525,6 +527,8 @@ export default async function InvitePage({
                 <div className="celestial-glow" style={{ bottom: "10%", right: "12%" }} />
                 <span className="shooting-star delay" />
                 <span className="shooting-star fast" />
+                <span className="shooting-star late" />
+                <span className="shooting-star small" />
               </>
             ) : null}
             {(invitation.theme === "boho" || invitation.theme === "garden" || invitation.theme === "classic") ? (
