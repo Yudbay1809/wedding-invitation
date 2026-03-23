@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 export function GalleryLightbox({
@@ -8,9 +8,10 @@ export function GalleryLightbox({
   variant = "masonry"
 }: {
   images: string[];
-  variant?: "masonry" | "grid" | "filmstrip";
+  variant?: "masonry" | "grid" | "filmstrip" | "polaroid" | "carousel";
 }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
 
   const active = activeIndex !== null ? images[activeIndex] : null;
 
@@ -40,6 +41,13 @@ export function GalleryLightbox({
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [activeIndex, goNext, goPrev]);
+
+  const scrollCarousel = (direction: "prev" | "next") => {
+    const node = carouselRef.current;
+    if (!node) return;
+    const scrollBy = node.clientWidth * 0.8;
+    node.scrollBy({ left: direction === "next" ? scrollBy : -scrollBy, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -74,38 +82,69 @@ export function GalleryLightbox({
           </div>
         </div>
       ) : null}
-      <div
-        className={
-          variant === "filmstrip"
-            ? "gallery-filmstrip mt-6"
-            : variant === "grid"
-              ? "gallery-grid mt-6"
-              : "columns-2 md:columns-3 gap-4 mt-6"
-        }
-      >
-        {images.map((src, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveIndex(index)}
-            className={
-              variant === "filmstrip"
-                ? "gallery-filmstrip-item"
-                : "mb-4 break-inside-avoid rounded-2xl overflow-hidden hover:opacity-90 transition"
-            }
-          >
-            <div
+      {variant === "carousel" ? (
+        <div className="gallery-carousel mt-6">
+          <div className="gallery-carousel-nav left-2">
+            <button type="button" onClick={() => scrollCarousel("prev")} aria-label="Previous">
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+          </div>
+          <div className="gallery-carousel-nav right-2">
+            <button type="button" onClick={() => scrollCarousel("next")} aria-label="Next">
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+          <div className="gallery-carousel-track" ref={carouselRef}>
+            {images.map((src, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className="gallery-carousel-item"
+              >
+                <div className="h-full w-full bg-[#f3f4f6]" style={{ backgroundImage: `url(${src})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div
+          className={
+            variant === "filmstrip"
+              ? "gallery-filmstrip mt-6"
+              : variant === "grid"
+                ? "gallery-grid mt-6"
+                : variant === "polaroid"
+                  ? "gallery-polaroid mt-6"
+                  : "columns-2 md:columns-3 gap-4 mt-6"
+          }
+        >
+          {images.map((src, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveIndex(index)}
               className={
                 variant === "filmstrip"
-                  ? "h-48 w-72 md:h-56 md:w-80"
-                  : variant === "grid"
-                    ? "h-40 md:h-52"
-                    : "h-40 md:h-56"
+                  ? "gallery-filmstrip-item"
+                  : variant === "polaroid"
+                    ? "gallery-polaroid-item"
+                    : "mb-4 break-inside-avoid rounded-2xl overflow-hidden hover:opacity-90 transition"
               }
-              style={{ backgroundImage: `url(${src})`, backgroundSize: "cover", backgroundPosition: "center" }}
-            />
-          </button>
-        ))}
-      </div>
+              style={variant === "polaroid" ? { ["--tilt" as string]: `${index % 2 === 0 ? -2 : 2}deg` } : undefined}
+            >
+              <div
+                className={
+                  variant === "filmstrip"
+                    ? "h-48 w-72 md:h-56 md:w-80"
+                    : variant === "grid"
+                      ? "h-40 md:h-52"
+                      : "h-40 md:h-56"
+                }
+                style={{ backgroundImage: `url(${src})`, backgroundSize: "cover", backgroundPosition: "center" }}
+              />
+            </button>
+          ))}
+        </div>
+      )}
     </>
   );
 }

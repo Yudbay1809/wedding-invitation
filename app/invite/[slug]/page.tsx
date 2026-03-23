@@ -253,9 +253,13 @@ export default async function InvitePage({
           variant={
             invitation.theme === "luxury"
               ? "filmstrip"
-              : invitation.theme === "minimal" || invitation.theme === "modern"
+              : invitation.theme === "minimal"
                 ? "grid"
-                : "masonry"
+                : invitation.theme === "modern" || invitation.theme === "celestial"
+                  ? "carousel"
+                  : invitation.theme === "romantic" || invitation.theme === "boho"
+                    ? "polaroid"
+                    : "masonry"
           }
         />
       </section>
@@ -470,12 +474,14 @@ export default async function InvitePage({
       <EnvelopeReveal
         title={couple?.bride_name && couple?.groom_name ? `${couple.bride_name} & ${couple.groom_name}` : "The Wedding"}
         subtitle={event?.akad_date ?? "Save the Date"}
+        variant={invitation.theme as "classic" | "minimal" | "romantic" | "luxury" | "boho" | "garden" | "modern" | "celestial"}
       />
       <InviteSection>
         <FadeParallax>
           <section className={`min-h-screen px-6 py-16 invite-hero ${layout.heroAlign}`}>
             {invitation.theme === "romantic" ? (
               <>
+                <div className="romantic-lace" />
                 <FloatingOrnament className="absolute -top-24 -left-24 h-64 w-64 opacity-70" />
                 <FloatingOrnament className="absolute -bottom-24 -right-24 h-64 w-64 opacity-50" />
                 <FloralParallaxLayer />
@@ -484,6 +490,7 @@ export default async function InvitePage({
             {invitation.theme === "modern" ? <div className="hero-grid" /> : null}
             {invitation.theme === "celestial" ? (
               <>
+                <div className="celestial-sky" />
                 <div className="starfield" />
                 <div className="celestial-glow" style={{ top: "12%", left: "8%" }} />
                 <div className="celestial-glow" style={{ bottom: "10%", right: "12%" }} />

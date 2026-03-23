@@ -3,8 +3,18 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export function EnvelopeReveal({ title, subtitle }: { title?: string; subtitle?: string }) {
+export function EnvelopeReveal({
+  title,
+  subtitle,
+  variant = "classic"
+}: {
+  title?: string;
+  subtitle?: string;
+  variant?: "classic" | "minimal" | "romantic" | "luxury" | "boho" | "garden" | "modern" | "celestial";
+}) {
   const [visible, setVisible] = useState(true);
+  const isLuxury = variant === "luxury";
+  const isCelestial = variant === "celestial";
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(false), 2800);
@@ -15,20 +25,28 @@ export function EnvelopeReveal({ title, subtitle }: { title?: string; subtitle?:
     <AnimatePresence>
       {visible ? (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-sand/90 backdrop-blur-sm"
+          className={`fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm ${
+            isLuxury || isCelestial ? "bg-ink/90" : "bg-sand/90"
+          }`}
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.6 } }}
         >
-          <div className="envelope-shell">
+          <div className={`envelope-shell envelope-${variant}`}>
             <motion.div
               className="envelope-letter"
-              initial={{ y: 40 }}
-              animate={{ y: -10 }}
-              transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: -10, opacity: 1 }}
+              transition={{ duration: isLuxury ? 1.4 : 1.1, ease: "easeOut", delay: 0.4 }}
             >
-              <p className="text-xs uppercase tracking-[0.2em] text-graphite">Wedding Invitation</p>
-              <h3 className="text-xl font-semibold mt-2 text-ink">{title ?? "The Wedding"}</h3>
-              <p className="text-sm text-graphite mt-1">{subtitle ?? "Save the Date"}</p>
+              <p className={`text-xs uppercase tracking-[0.2em] ${isLuxury || isCelestial ? "text-white/70" : "text-graphite"}`}>
+                Wedding Invitation
+              </p>
+              <h3 className={`text-xl font-semibold mt-2 ${isLuxury || isCelestial ? "text-white" : "text-ink"}`}>
+                {title ?? "The Wedding"}
+              </h3>
+              <p className={`text-sm mt-1 ${isLuxury || isCelestial ? "text-white/70" : "text-graphite"}`}>
+                {subtitle ?? "Save the Date"}
+              </p>
             </motion.div>
             <div className="envelope-base" />
             <motion.div

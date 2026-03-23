@@ -194,6 +194,33 @@ h1, h2, h3, h4 {
     #f7f5fb;
 }
 
+.theme-romantic {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.18), transparent 50%),
+    radial-gradient(circle at 80% 10%, rgba(255, 214, 214, 0.35), transparent 45%),
+    linear-gradient(120deg, #fff7f7, #fceff0);
+}
+
+.theme-boho {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(201, 122, 91, 0.16), transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 232, 214, 0.4), transparent 45%),
+    #fdf6ef;
+}
+
+.theme-garden {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(107, 159, 135, 0.18), transparent 50%),
+    radial-gradient(circle at 85% 10%, rgba(204, 236, 214, 0.45), transparent 45%),
+    #f3faf6;
+}
+
+.theme-modern {
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.06), transparent 45%),
+    #f8fafc;
+}
+
 .theme-luxury {
   --accent: #f59e0b;
 }
@@ -242,6 +269,115 @@ h1, h2, h3, h4 {
   border: 1px solid rgba(0, 0, 0, 0.08);
   padding: 20px;
   z-index: 2;
+}
+
+.envelope-romantic .envelope-base {
+  background: linear-gradient(135deg, #ffe9ec, #fff7f2);
+}
+
+.envelope-romantic .envelope-flap {
+  background: linear-gradient(135deg, #ffb4c6, #ffe1ea);
+}
+
+.envelope-luxury .envelope-base {
+  background: linear-gradient(135deg, #1f2937, #111827);
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
+.envelope-luxury .envelope-flap {
+  background: linear-gradient(135deg, #f59e0b, #fcd34d);
+}
+
+.envelope-celestial .envelope-base {
+  background: linear-gradient(135deg, #312e81, #1f2937);
+  border-color: rgba(129, 140, 248, 0.5);
+}
+
+.envelope-celestial .envelope-flap {
+  background: linear-gradient(135deg, #818cf8, #38bdf8);
+}
+
+.romantic-lace {
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/floral-ornament.svg");
+  background-repeat: repeat;
+  background-size: 220px;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.celestial-sky {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, rgba(255, 255, 255, 0.8), transparent 60%),
+    radial-gradient(1px 1px at 50% 30%, rgba(255, 255, 255, 0.7), transparent 60%),
+    radial-gradient(1.5px 1.5px at 70% 70%, rgba(255, 255, 255, 0.6), transparent 60%);
+  opacity: 0.6;
+  animation: twinkle 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.gallery-polaroid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+}
+
+.gallery-polaroid-item {
+  background: #fff;
+  border-radius: 20px;
+  padding: 12px 12px 28px 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transform: rotate(var(--tilt, -2deg));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-polaroid-item:hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: 0 24px 46px rgba(0, 0, 0, 0.14);
+}
+
+.gallery-carousel {
+  position: relative;
+}
+
+.gallery-carousel-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 6px;
+}
+
+.gallery-carousel-item {
+  flex: 0 0 auto;
+  width: min(280px, 80vw);
+  height: 200px;
+  border-radius: 24px;
+  overflow: hidden;
+  scroll-snap-align: center;
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.12);
+}
+
+.gallery-carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.gallery-carousel-nav button {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.8);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .typewriter {
