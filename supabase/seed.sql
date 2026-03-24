@@ -67,7 +67,7 @@ values
   ('66666666-6666-6666-6666-666666666666', 'Kiara', 'Hadi', 'Cerita hangat di bawah matahari senja.'),
   ('77777777-7777-7777-7777-777777777777', 'Maya', 'Reno', 'Di taman hijau kami merayakan cinta.'),
   ('88888888-8888-8888-8888-888888888888', 'Sena', 'Raka', 'Urban love dengan ritme modern.'),
-  ('99999999-9999-9999-9999-999999999999', 'Luna', 'Arga', 'Seperti bintang, kisah kami menyala terang.');
+  ('99999999-9999-9999-9999-999999999999', 'Luna', 'Arga', 'Seperti bintang, kisah kami menyala terang.')
 on conflict (invitation_id) do nothing;
 
 insert into invitation_events (invitation_id, akad_date, akad_time, akad_venue, reception_date, reception_time, reception_venue, maps_link)
@@ -80,7 +80,7 @@ values
   ('66666666-6666-6666-6666-666666666666', '2026-09-18', '16:00', 'Sunset Deck', '2026-09-18', '19:30', 'Boho Lounge', 'https://maps.google.com'),
   ('77777777-7777-7777-7777-777777777777', '2026-10-02', '15:30', 'Garden Terrace', '2026-10-02', '19:00', 'Greenhouse Hall', 'https://maps.google.com'),
   ('88888888-8888-8888-8888-888888888888', '2026-10-18', '09:00', 'City Hall', '2026-10-18', '20:00', 'Downtown Loft', 'https://maps.google.com'),
-  ('99999999-9999-9999-9999-999999999999', '2026-11-01', '18:00', 'Star Pavilion', '2026-11-01', '20:30', 'Celestial Dome', 'https://maps.google.com');
+  ('99999999-9999-9999-9999-999999999999', '2026-11-01', '18:00', 'Star Pavilion', '2026-11-01', '20:30', 'Celestial Dome', 'https://maps.google.com')
 on conflict (invitation_id) do nothing;
 
 insert into invitation_gallery (invitation_id, image_url, position)
