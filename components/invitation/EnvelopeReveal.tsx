@@ -30,6 +30,11 @@ export function EnvelopeReveal({
     };
   }, [visible]);
 
+  useEffect(() => {
+    if (visible) return;
+    window.dispatchEvent(new CustomEvent("invite:opened"));
+  }, [visible]);
+
   return (
     <AnimatePresence>
       {visible ? (

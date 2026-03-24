@@ -17,6 +17,8 @@ export function TypewriterText({
   const [displayed, setDisplayed] = useState("");
   const [started, setStarted] = useState(false);
   const containerRef = useRef<HTMLParagraphElement | null>(null);
+  const hasOpenedRef = useRef(false);
+  const isVisibleRef = useRef(false);
 
   useEffect(() => {
     const node = containerRef.current;
@@ -24,15 +26,31 @@ export function TypewriterText({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setStarted(true);
+          isVisibleRef.current = true;
           observer.disconnect();
+          if (hasOpenedRef.current) {
+            setStarted(true);
+          }
         }
       },
       { threshold: 0.5 }
     );
+
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const onOpened = () => {
+      hasOpenedRef.current = true;
+      if (!started && isVisibleRef.current) {
+        setStarted(true);
+      }
+    };
+
+    window.addEventListener("invite:opened", onOpened);
+    return () => window.removeEventListener("invite:opened", onOpened);
+  }, [started]);
 
   useEffect(() => {
     if (!started) return;
