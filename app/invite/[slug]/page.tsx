@@ -590,8 +590,33 @@ export default async function InvitePage({
                       <CountdownMini date={event?.akad_date ?? event?.reception_date ?? null} />
                     </div>
                   </div>
+                  <div className="grid gap-3 md:hidden">
+                    <div className="surface p-4 invite-card">
+                      <p className="text-xs uppercase tracking-[0.3em] text-graphite">Gallery Preview</p>
+                      <div className="mt-3 flex gap-2">
+                        {heroGallery.map((image, index) => (
+                          <div
+                            key={index}
+                            className="h-16 w-16 rounded-2xl hero-thumb"
+                            style={{ backgroundImage: `url(${image})`, backgroundSize: "cover", backgroundPosition: "center" }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <div className="surface p-4 invite-card">
+                      <p className="text-xs uppercase tracking-[0.3em] text-graphite">Quick Info</p>
+                      <div className="mt-3 flex items-center justify-between text-sm">
+                        <span>Dresscode</span>
+                        <span className="mono">Monochrome</span>
+                      </div>
+                      <div className="mt-2 flex items-center justify-between text-sm">
+                        <span>Hashtag</span>
+                        <span className="mono">#RaisaDimas</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="grid gap-4 relative">
+                <div className="hidden md:grid gap-4 relative">
                   <div className="surface p-4 invite-card">
                     <div className="h-64 rounded-2xl bg-[#f3f4f6]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                     <div className="mt-4 flex items-center justify-between text-xs text-graphite">
