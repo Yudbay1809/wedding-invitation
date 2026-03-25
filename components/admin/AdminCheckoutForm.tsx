@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import { calculateCheckoutPrice } from "@/lib/pricing";
@@ -72,7 +72,7 @@ export function AdminCheckoutForm({ profiles }: { profiles: ProfileOption[] }) {
           <option value="refund">Refund</option>
         </select>
         <div className="text-xs text-graphite">
-          Auto theme by plan: Free → Classic, Premium → Romantic, Business → Luxury. Add-on akan override.
+          Auto theme by plan: Free â†’ Classic, Premium â†’ Romantic, Business â†’ Luxury. Add-on akan override.
         </div>
       </div>
       <div className="rounded-xl border border-black/10 px-4 py-3 text-sm text-graphite">
@@ -85,3 +85,4 @@ export function AdminCheckoutForm({ profiles }: { profiles: ProfileOption[] }) {
     </form>
   );
 }
+

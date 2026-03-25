@@ -1,4 +1,4 @@
-import { DataTable } from "@/components/ui/DataTable";
+﻿import { DataTable } from "@/components/ui/DataTable";
 import { StatCard } from "@/components/ui/StatCard";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { updateTenantSubscription } from "@/app/actions/admin";
@@ -103,6 +103,16 @@ export default async function AdminPage() {
     trx.created_at ? new Date(trx.created_at).toLocaleDateString("id-ID") : "-"
   ]);
 
+  const addonCounts = new Map<string, number>();
+  (transactions ?? []).forEach((trx) => {
+    const addon = trx.addon_theme ?? "none";
+    addonCounts.set(addon, (addonCounts.get(addon) ?? 0) + 1);
+  });
+
+  const addonSummary = Array.from(addonCounts.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 4);
+
   return (
     <div className="grid gap-8">
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-3">
@@ -116,7 +126,7 @@ export default async function AdminPage() {
       <div className="grid lg:grid-cols-[1.2fr_1fr] gap-6">
         <div className="surface p-6">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-graphite">Ringkasan Supplier</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-graphite">Ringkasan Platform</h3>
             <span className="text-xs text-graphite">Bulan ini</span>
           </div>
           <div className="grid md:grid-cols-3 gap-4 mt-4">
@@ -204,8 +214,8 @@ export default async function AdminPage() {
             <div className="mt-4 space-y-3 text-sm text-graphite">
               {transactionRows.slice(0, 3).map((row, index) => (
                 <div key={`${row[0]}-${index}`} className="rounded-2xl bg-cloud px-4 py-3">
-                  <p className="font-semibold text-ink">{row[1]} • {row[0]}</p>
-                  <p className="text-xs">{row[2]} / Add-on {row[3]} • {row[5]}</p>
+                  <p className="font-semibold text-ink">{row[1]} - {row[0]}</p>
+                  <p className="text-xs">{row[2]} / Add-on {row[3]} - {row[5]}</p>
                 </div>
               ))}
             </div>
@@ -215,6 +225,21 @@ export default async function AdminPage() {
             <p className="text-sm text-graphite mt-2">Trend transaksi 6 minggu terakhir (placeholder).</p>
             <div className="mt-4">
               <div className="h-32 rounded-2xl bg-cloud" />
+            </div>
+          </div>
+          <div className="surface p-5">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-graphite">Add-on Terpopuler</h3>
+            <div className="mt-3 space-y-3 text-sm text-graphite">
+              {addonSummary.length ? (
+                addonSummary.map(([addon, count]) => (
+                  <div key={addon} className="flex items-center justify-between rounded-2xl bg-cloud px-4 py-3">
+                    <span>{addon === "none" ? "Tanpa add-on" : addon}</span>
+                    <span className="text-xs text-graphite">{count} transaksi</span>
+                  </div>
+                ))
+              ) : (
+                <div className="rounded-2xl bg-cloud px-4 py-3">Belum ada transaksi add-on.</div>
+              )}
             </div>
           </div>
         </div>
@@ -246,3 +271,5 @@ export default async function AdminPage() {
     </div>
   );
 }
+
+
