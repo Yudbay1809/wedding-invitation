@@ -19,7 +19,7 @@ values (
   'authenticated',
   'authenticated',
   'admin@admin.com',
-  crypt('admin', gen_salt('bf')),
+  crypt('admin123', gen_salt('bf')),
   now(),
   now(),
   '{"provider":"email","providers":["email"]}'::jsonb,
