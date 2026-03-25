@@ -18,7 +18,7 @@ values (
   '00000000-0000-0000-0000-000000000000',
   'authenticated',
   'authenticated',
-  'admin@admin',
+  'admin@admin.com',
   crypt('admin', gen_salt('bf')),
   now(),
   now(),
@@ -33,7 +33,7 @@ insert into auth.identities (provider_id, user_id, identity_data, provider, last
 values (
   '00000000-0000-0000-0000-000000000000',
   '00000000-0000-0000-0000-000000000000',
-  jsonb_build_object('sub', '00000000-0000-0000-0000-000000000000', 'email', 'admin@admin', 'email_verified', true),
+  jsonb_build_object('sub', '00000000-0000-0000-0000-000000000000', 'email', 'admin@admin.com', 'email_verified', true),
   'email',
   now(),
   now(),
