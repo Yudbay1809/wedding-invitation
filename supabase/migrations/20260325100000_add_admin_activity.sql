@@ -1,4 +1,4 @@
-﻿-- Admin activity log + audit trail
+-- Admin activity log + audit trail
 create table if not exists admin_activity (
   id uuid primary key default gen_random_uuid(),
   actor_id uuid not null references profiles(id) on delete cascade,
