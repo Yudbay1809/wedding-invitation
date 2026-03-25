@@ -1,8 +1,8 @@
 -- Dummy seed data (local dev)
 insert into auth.instances (id, uuid, raw_base_config, created_at, updated_at)
 values (
-  '11111111-1111-1111-1111-111111111111',
-  '11111111-1111-1111-1111-111111111111',
+  '00000000-0000-0000-0000-000000000000',
+  '00000000-0000-0000-0000-000000000000',
   null,
   now(),
   now()
@@ -11,10 +11,12 @@ on conflict (id) do nothing;
 
 insert into auth.users (
   instance_id, id, aud, role, email, encrypted_password, created_at, updated_at,
-  raw_app_meta_data, raw_user_meta_data, is_super_admin, email_confirmed_at
+  raw_app_meta_data, raw_user_meta_data, is_super_admin, email_confirmed_at,
+  confirmation_token, recovery_token, email_change_token_new, email_change_token_current, reauthentication_token,
+  phone_change_token, email_change, phone_change
 )
 values (
-  '11111111-1111-1111-1111-111111111111',
+  '00000000-0000-0000-0000-000000000000',
   '00000000-0000-0000-0000-000000000000',
   'authenticated',
   'authenticated',
@@ -25,7 +27,15 @@ values (
   '{"provider":"email","providers":["email"]}'::jsonb,
   '{}'::jsonb,
   false,
-  now()
+  now(),
+  '',
+  '',
+  '',
+  '',
+  '',
+  '',
+  '',
+  ''
 )
 on conflict (id) do nothing;
 
