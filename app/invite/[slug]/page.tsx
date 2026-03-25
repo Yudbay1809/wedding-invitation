@@ -662,6 +662,8 @@ export default async function InvitePage({
               </div>
             ) : invitation.theme === "luxury" ? (
               <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.1fr_1fr] gap-10 items-center text-white relative z-10">
+                <span className="lux-ornament" style={{ top: "-40px", left: "-40px" }} />
+                <span className="lux-ornament small" style={{ bottom: "-30px", right: "40px" }} />
                 <div className="flex flex-col gap-5">
                   <span className="lux-chip">Luxury Celebration</span>
                   <h1 className="text-4xl md:text-6xl font-semibold tracking-[0.12em] uppercase">
@@ -682,6 +684,22 @@ export default async function InvitePage({
                   <div className="flex flex-wrap items-center gap-3">
                     <a href="#rsvp" className="lux-cta">RSVP</a>
                     <span className="text-xs text-white/60 uppercase tracking-[0.3em]">Black & Gold</span>
+                  </div>
+                  <div className="lux-timeline">
+                    <div className="lux-timeline-item">
+                      <span className="lux-timeline-dot" />
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/60">Akad</p>
+                        <p className="text-sm font-semibold">{event?.akad_time ?? "09:00"} • {event?.akad_venue ?? "Gedung Serbaguna"}</p>
+                      </div>
+                    </div>
+                    <div className="lux-timeline-item">
+                      <span className="lux-timeline-dot" />
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/60">Resepsi</p>
+                        <p className="text-sm font-semibold">{event?.reception_time ?? "19:00"} • {event?.reception_venue ?? "Ballroom Hotel"}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="lux-frame">

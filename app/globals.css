@@ -296,6 +296,49 @@ h1, h2, h3, h4 {
   box-shadow: 0 24px 50px rgba(245, 158, 11, 0.45);
 }
 
+.lux-ornament {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(245, 158, 11, 0.25), transparent 55%),
+    radial-gradient(circle at 70% 70%, rgba(250, 204, 21, 0.2), transparent 55%);
+  opacity: 0.6;
+  filter: blur(0.4px);
+  pointer-events: none;
+}
+
+.lux-ornament.small {
+  width: 120px;
+  height: 120px;
+  opacity: 0.5;
+}
+
+.lux-timeline {
+  display: grid;
+  gap: 12px;
+}
+
+.lux-timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  background: rgba(17, 24, 39, 0.7);
+}
+
+.lux-timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.9);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
+}
+
 .envelope-shell {
   position: relative;
   width: 320px;
