@@ -230,6 +230,72 @@ h1, h2, h3, h4 {
   background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.7), rgba(245, 158, 11, 0.1));
 }
 
+.theme-luxury {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(245, 158, 11, 0.12), transparent 45%),
+    radial-gradient(circle at 80% 10%, rgba(250, 204, 21, 0.08), transparent 45%),
+    #0b0f19;
+  color: #f8f4ea;
+}
+
+.lux-surface {
+  background: rgba(17, 24, 39, 0.75);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+}
+
+.lux-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: rgba(245, 158, 11, 0.95);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+}
+
+.lux-frame {
+  border-radius: 28px;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.6));
+}
+
+.lux-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fef3c7;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.lux-cta {
+  background: linear-gradient(120deg, #f59e0b, #fcd34d);
+  color: #111827;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 18px 40px rgba(245, 158, 11, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lux-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 50px rgba(245, 158, 11, 0.45);
+}
+
 .envelope-shell {
   position: relative;
   width: 320px;

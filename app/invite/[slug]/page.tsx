@@ -661,28 +661,46 @@ export default async function InvitePage({
                 </div>
               </div>
             ) : invitation.theme === "luxury" ? (
-              <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-4 text-white relative z-10">
-                <span className="pill pill-accent">The Wedding of</span>
-                <h1 className="text-4xl md:text-6xl font-semibold">
-                  {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
-                </h1>
-                <div className="lux-divider w-40" />
-                <div className="flex items-center gap-3 text-sm text-white/70">
-                  <Heart className="h-4 w-4" />
-                  <span>{event?.akad_date ?? "21 Juni 2026"}</span>
+              <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.1fr_1fr] gap-10 items-center text-white relative z-10">
+                <div className="flex flex-col gap-5">
+                  <span className="lux-chip">Luxury Celebration</span>
+                  <h1 className="text-4xl md:text-6xl font-semibold tracking-[0.12em] uppercase">
+                    {couple?.bride_name ?? "Raisa"} & {couple?.groom_name ?? "Dimas"}
+                  </h1>
+                  <div className="lux-divider w-40" />
+                  <div className="lux-date">
+                    <Heart className="h-4 w-4" />
+                    <span>{event?.akad_date ?? "21 Juni 2026"}</span>
+                  </div>
+                  <TypewriterText
+                    className="text-sm text-white/70 max-w-xl"
+                    text={invitation.opening_quote ?? "Dengan penuh rasa syukur kami mengundangmu untuk menjadi bagian dari hari bahagia kami."}
+                  />
+                  {guestName ? (
+                    <p className="text-sm bg-white/10 px-4 py-2 rounded-full w-fit">Kepada Yth. {guestName}</p>
+                  ) : null}
+                  <div className="flex flex-wrap items-center gap-3">
+                    <a href="#rsvp" className="lux-cta">RSVP</a>
+                    <span className="text-xs text-white/60 uppercase tracking-[0.3em]">Black & Gold</span>
+                  </div>
                 </div>
-                <TypewriterText
-                  className="text-sm text-white/70 max-w-xl"
-                  text={invitation.opening_quote ?? "Dengan penuh rasa syukur kami mengundangmu untuk menjadi bagian dari hari bahagia kami."}
-                />
-                {guestName ? (
-                  <p className="text-sm bg-white/10 px-4 py-2 rounded-full">Kepada Yth. {guestName}</p>
-                ) : null}
-                {coverImage ? (
+                <div className="lux-frame">
                   <Parallax strength={30}>
-                    <div className="mt-6 h-64 w-full max-w-xl rounded-3xl bg-[#111827]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
+                    <div className="h-80 rounded-2xl bg-[#111827]" style={{ backgroundImage: `url(${coverImage})`, backgroundSize: "cover", backgroundPosition: "center" }} />
                   </Parallax>
-                ) : null}
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    <div className="lux-surface p-4 rounded-2xl">
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/60">Akad</p>
+                      <p className="text-sm font-semibold mt-2">{event?.akad_time ?? "09:00"}</p>
+                      <p className="text-xs text-white/60">{event?.akad_venue ?? "Gedung Serbaguna"}</p>
+                    </div>
+                    <div className="lux-surface p-4 rounded-2xl">
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/60">Resepsi</p>
+                      <p className="text-sm font-semibold mt-2">{event?.reception_time ?? "19:00"}</p>
+                      <p className="text-xs text-white/60">{event?.reception_venue ?? "Ballroom Hotel"}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             ) : invitation.theme === "boho" ? (
               <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.1fr_1fr] gap-8 items-center relative z-10">
