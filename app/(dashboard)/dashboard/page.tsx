@@ -1,4 +1,4 @@
-import { StatCard } from "@/components/ui/StatCard";
+﻿import { StatCard } from "@/components/ui/StatCard";
 import { AnalyticsChart } from "@/components/ui/AnalyticsChart";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { format, startOfDay, subDays } from "date-fns";
@@ -12,7 +12,7 @@ export default async function DashboardOverviewPage() {
 
   const { data: invitations, count: invitationCount } = await supabase
     .from("invitations")
-    .select("id", { count: "exact" })
+    .select("id, title, slug, status, updated_at", { count: "exact" })
     .eq("user_id", userData.user?.id ?? "");
 
   const invitationIds = (invitations ?? []).map((item) => item.id);
@@ -62,6 +62,12 @@ export default async function DashboardOverviewPage() {
   const hasInvitations = (invitationCount ?? 0) > 0;
   const hasViews = dayBuckets.some((bucket) => bucket.value > 0);
 
+  const statusStyles: Record<string, string> = {
+    published: "bg-emerald/10 text-emerald border border-emerald/20",
+    draft: "bg-amber/10 text-amber border border-amber/20",
+    archived: "bg-rose-50 text-rose-600 border border-rose-200"
+  };
+
   return (
     <div className="grid gap-6">
       <div className="grid md:grid-cols-2 xl:grid-cols-5 gap-4">
@@ -86,22 +92,47 @@ export default async function DashboardOverviewPage() {
           ) : null}
         </>
       )}
-      <div className="surface p-6">
-        <div className="flex items-start justify-between gap-6">
-          <div>
-            <h3 className="text-lg font-semibold">What’s next</h3>
-            <p className="text-sm text-graphite">Tiga langkah cepat untuk undangan pertama kamu.</p>
-            <ol className="mt-4 grid gap-2 text-sm text-ink/70">
-              <li>1. Buat undangan baru dengan tema yang sesuai.</li>
-              <li>2. Lengkapi info pasangan, acara, dan galeri.</li>
-              <li>3. Publish & bagikan link ke tamu.</li>
-            </ol>
+      <div className="grid lg:grid-cols-[1.2fr_1fr] gap-6">
+        <div className="surface p-6">
+          <div className="flex items-start justify-between gap-6">
+            <div>
+              <h3 className="text-lg font-semibold">What’s next</h3>
+              <p className="text-sm text-graphite">Tiga langkah cepat untuk undangan pertama kamu.</p>
+              <ol className="mt-4 grid gap-2 text-sm text-ink/70">
+                <li>1. Buat undangan baru dengan tema yang sesuai.</li>
+                <li>2. Lengkapi info pasangan, acara, dan galeri.</li>
+                <li>3. Publish dan bagikan link ke tamu.</li>
+              </ol>
+            </div>
+            <Link href="/dashboard/create">
+              <Button>Mulai Sekarang</Button>
+            </Link>
           </div>
-          <Link href="/dashboard/create">
-            <Button>Mulai Sekarang</Button>
-          </Link>
+        </div>
+        <div className="surface p-6">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold">Invitations Terbaru</h3>
+            <Link href="/dashboard/invitations" className="text-sm text-ocean">Lihat semua</Link>
+          </div>
+          <div className="mt-4 space-y-3 text-sm">
+            {(invitations ?? []).slice(0, 3).map((invitation) => (
+              <div key={invitation.id} className="flex items-center justify-between rounded-2xl bg-cloud px-4 py-3">
+                <div>
+                  <p className="font-semibold text-ink">{invitation.title ?? "Untitled"}</p>
+                  <p className="text-xs text-graphite">/invite/{invitation.slug ?? "-"}</p>
+                </div>
+                <span className={`text-[0.65rem] uppercase tracking-[0.2em] px-2 py-1 rounded-full ${statusStyles[invitation.status ?? "draft"] ?? "border border-black/10 text-graphite"}`}>
+                  {invitation.status ?? "draft"}
+                </span>
+              </div>
+            ))}
+            {!invitations?.length ? (
+              <div className="rounded-2xl bg-cloud px-4 py-3 text-xs text-graphite">Belum ada undangan.</div>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>
   );
 }
+

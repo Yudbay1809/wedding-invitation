@@ -110,6 +110,27 @@ create policy "white_label_public_read" on storage.objects for select
 npm run dev
 ```
 
+## Local Demo Credentials
+
+Untuk Supabase Local + `supabase db reset`, akun demo berikut otomatis tersedia:
+
+- Admin: `admin@admin.com` / `admin123`
+
+Catatan: pastikan Supabase Local berjalan dan `.env.local` sudah terisi.
+
+## Demo Invite Links
+
+Setelah `supabase db reset`, demo undangan berikut tersedia:
+
+- `http://localhost:3000/invite/demo-classic`
+- `http://localhost:3000/invite/demo-minimal`
+- `http://localhost:3000/invite/demo-romantic`
+- `http://localhost:3000/invite/demo-luxury`
+- `http://localhost:3000/invite/demo-boho`
+- `http://localhost:3000/invite/demo-garden`
+- `http://localhost:3000/invite/demo-modern`
+- `http://localhost:3000/invite/demo-celestial`
+
 ## CI (GitHub Actions)
 
 Workflow CI sudah disiapkan untuk menjalankan:

@@ -21,6 +21,7 @@ import { TypewriterText } from "@/components/invitation/TypewriterText";
 import { SparkleLink } from "@/components/invitation/SparkleLink";
 import { FadeParallax } from "@/components/invitation/FadeParallax";
 import { MapReveal } from "@/components/invitation/MapReveal";
+import type { ReactElement } from "react";
 
 const themeClassMap: Record<string, string> = {
   classic: "theme-classic",
@@ -493,7 +494,7 @@ export default async function InvitePage({
         ? [signatureSection, eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]
         : invitation.theme === "modern"
           ? [signatureSection, gallerySection, eventSection, storySection, mapSection, rsvpSection, giftSection, closingSection]
-          : [signatureSection, eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]).filter(Boolean) as JSX.Element[];
+          : [signatureSection, eventSection, storySection, gallerySection, mapSection, rsvpSection, giftSection, closingSection]).filter(Boolean) as ReactElement[];
 
   return (
     <main className={`bg-sand text-ink ${themeClass}`}>
