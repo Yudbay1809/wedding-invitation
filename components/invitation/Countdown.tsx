@@ -28,18 +28,20 @@ export function Countdown({ date }: { date?: string | null }) {
 
   return (
     <div className="countdown-shell">
-      <div className="grid grid-cols-4 gap-3 countdown-grid">
-        {[
-          { label: "Hari", value: timeLeft.days },
-          { label: "Jam", value: timeLeft.hours },
-          { label: "Menit", value: timeLeft.minutes },
-          { label: "Detik", value: timeLeft.seconds }
-        ].map((item) => (
-          <div key={item.label} className="surface p-3 text-center countdown-tile">
-            <p className="text-[22px] md:text-2xl font-semibold countdown-value">{item.value}</p>
-            <p className="text-xs uppercase tracking-[0.2em] text-graphite countdown-label">{item.label}</p>
-          </div>
-        ))}
+      <div className="countdown-card">
+        <p className="countdown-title">Countdown</p>
+        <div className="grid grid-cols-3 gap-3 countdown-grid">
+          {[
+            { label: "Hari", value: timeLeft.days },
+            { label: "Jam", value: timeLeft.hours },
+            { label: "Menit", value: timeLeft.minutes }
+          ].map((item) => (
+            <div key={item.label} className="countdown-pill">
+              <p className="text-[20px] md:text-[22px] font-semibold countdown-value">{item.value}</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-graphite countdown-label">{item.label}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

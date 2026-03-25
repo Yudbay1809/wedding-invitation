@@ -583,24 +583,37 @@ h1, h2, h3, h4 {
   overflow: visible;
 }
 
+.countdown-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 16px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.countdown-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
 .countdown-grid {
   align-items: stretch;
   overflow: visible;
 }
 
-.countdown-tile {
-  min-height: 96px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 8px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  overflow: visible;
+.countdown-pill {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 10px 8px;
+  text-align: center;
+  border: 1px solid rgba(148, 163, 184, 0.3);
 }
 
 .countdown-value {
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
 .countdown-label {
@@ -612,16 +625,11 @@ h1, h2, h3, h4 {
     padding-top: 6px;
     padding-bottom: 6px;
   }
-  .countdown-tile {
-    min-height: 88px;
-    padding: 12px 10px;
+  .countdown-card {
+    padding: 14px;
   }
-  .countdown-value {
-    font-size: 21px;
-  }
-  .countdown-label {
-    font-size: 10px;
-    letter-spacing: 0.18em;
+  .countdown-title {
+    letter-spacing: 0.3em;
   }
 }
 
