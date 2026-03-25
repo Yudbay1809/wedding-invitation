@@ -577,8 +577,15 @@ h1, h2, h3, h4 {
   right: 12px;
 }
 
+.countdown-shell {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  overflow: visible;
+}
+
 .countdown-grid {
   align-items: stretch;
+  overflow: visible;
 }
 
 .countdown-tile {
@@ -601,6 +608,10 @@ h1, h2, h3, h4 {
 }
 
 @media (max-width: 640px) {
+  .countdown-shell {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
   .countdown-tile {
     min-height: 88px;
     padding: 12px 10px;
