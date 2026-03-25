@@ -835,11 +835,13 @@ export default async function InvitePage({
         </FadeParallax>
       </InviteSection>
 
-      <InviteSection>
-        <section className="max-w-4xl mx-auto px-6 py-6">
-          <Countdown date={event?.akad_date ?? event?.reception_date ?? null} />
-        </section>
-      </InviteSection>
+      {invitation.theme !== "minimal" ? (
+        <InviteSection>
+          <section className="max-w-4xl mx-auto px-6 py-6">
+            <Countdown date={event?.akad_date ?? event?.reception_date ?? null} />
+          </section>
+        </InviteSection>
+      ) : null}
 
       <InviteSection>
         <section className="max-w-4xl mx-auto px-6 py-8">

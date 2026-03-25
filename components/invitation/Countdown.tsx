@@ -35,7 +35,7 @@ export function Countdown({ date }: { date?: string | null }) {
         { label: "Detik", value: timeLeft.seconds }
       ].map((item) => (
         <div key={item.label} className="surface p-3 text-center countdown-tile">
-          <p className="text-2xl font-semibold countdown-value">{item.value}</p>
+          <p className="text-[22px] md:text-2xl font-semibold countdown-value">{item.value}</p>
           <p className="text-xs uppercase tracking-[0.2em] text-graphite countdown-label">{item.label}</p>
         </div>
       ))}

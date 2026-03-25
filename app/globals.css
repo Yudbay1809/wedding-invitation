@@ -582,29 +582,31 @@ h1, h2, h3, h4 {
 }
 
 .countdown-tile {
-  min-height: 86px;
+  min-height: 96px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 6px;
-  overflow: hidden;
+  gap: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  overflow: visible;
 }
 
 .countdown-value {
-  line-height: 1;
+  line-height: 1.15;
 }
 
 .countdown-label {
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
 @media (max-width: 640px) {
   .countdown-tile {
-    min-height: 74px;
-    padding: 10px;
+    min-height: 88px;
+    padding: 12px 10px;
   }
   .countdown-value {
-    font-size: 20px;
+    font-size: 21px;
   }
   .countdown-label {
     font-size: 10px;
