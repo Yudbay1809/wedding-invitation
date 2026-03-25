@@ -4,6 +4,7 @@ import { requireAdmin } from "@/lib/subscription";
 import { resolveCheckoutTheme } from "@/lib/plans";
 import { calculateCheckoutPrice } from "@/lib/pricing";
 import { revalidatePath } from "next/cache";
+import { logAdminActivity } from "@/lib/admin-audit";
 
 export async function updateTenantSubscription(formData: FormData) {
   const { supabase } = await requireAdmin();
@@ -18,6 +19,13 @@ export async function updateTenantSubscription(formData: FormData) {
   if (error) {
     throw new Error(error.message);
   }
+
+  await logAdminActivity({
+    action: "update_subscription",
+    targetType: "profile",
+    targetId: userId,
+    metadata: { plan, status }
+  });
 
   revalidatePath("/admin");
 }
@@ -40,6 +48,13 @@ export async function setInvitationStatus(formData: FormData) {
     throw new Error(error.message);
   }
 
+  await logAdminActivity({
+    action: "update_invitation_status",
+    targetType: "invitation",
+    targetId: invitationId,
+    metadata: { status }
+  });
+
   revalidatePath("/admin");
 }
 
@@ -60,6 +75,12 @@ export async function bulkUpdateInvitationStatus(formData: FormData) {
   if (error) {
     throw new Error(error.message);
   }
+
+  await logAdminActivity({
+    action: "bulk_update_invitation_status",
+    targetType: "invitation",
+    metadata: { status, ids }
+  });
 
   revalidatePath("/admin");
 }
@@ -82,6 +103,13 @@ export async function setInvitationTheme(formData: FormData) {
   if (error) {
     throw new Error(error.message);
   }
+
+  await logAdminActivity({
+    action: "set_invitation_theme",
+    targetType: "invitation",
+    targetId: invitationId,
+    metadata: { theme, themeLocked }
+  });
 
   revalidatePath("/admin");
   revalidatePath("/admin/invitations");
@@ -142,6 +170,13 @@ export async function createInvitationFromCheckout(formData: FormData) {
   if (transactionError) {
     throw new Error(transactionError.message);
   }
+
+  await logAdminActivity({
+    action: "create_invitation_from_checkout",
+    targetType: "invitation",
+    targetId: invitation.id,
+    metadata: { plan, addonTheme: addonTheme || null, status }
+  });
 
   revalidatePath("/admin");
   revalidatePath("/admin/invitations");

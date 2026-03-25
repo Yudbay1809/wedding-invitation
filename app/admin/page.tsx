@@ -113,6 +113,12 @@ export default async function AdminPage() {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 4);
 
+  const { data: activityRows } = await supabase
+    .from("admin_activity")
+    .select("id, action, created_at")
+    .order("created_at", { ascending: false })
+    .limit(3);
+
   return (
     <div className="grid gap-8">
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-3">
@@ -239,6 +245,26 @@ export default async function AdminPage() {
                 ))
               ) : (
                 <div className="rounded-2xl bg-cloud px-4 py-3">Belum ada transaksi add-on.</div>
+              )}
+            </div>
+          </div>
+          <div className="surface p-5">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-graphite">Audit Terbaru</h3>
+              <a className="text-xs text-emerald" href="/admin/activity">Lihat log</a>
+            </div>
+            <div className="mt-3 space-y-3 text-sm text-graphite">
+              {(activityRows ?? []).length ? (
+                (activityRows ?? []).map((item) => (
+                  <div key={item.id} className="flex items-center justify-between rounded-2xl bg-cloud px-4 py-3">
+                    <span>{item.action}</span>
+                    <span className="text-xs text-graphite">
+                      {item.created_at ? new Date(item.created_at).toLocaleDateString("id-ID") : "-"}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <div className="rounded-2xl bg-cloud px-4 py-3">Belum ada aktivitas.</div>
               )}
             </div>
           </div>
